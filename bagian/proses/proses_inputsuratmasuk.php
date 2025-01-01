@@ -1,58 +1,101 @@
 <?php
-	session_start();
-	include '../../koneksi/koneksi.php';
-	
-	$tanggalmasuk_suratmasuk	        = mysqli_real_escape_string($db,$_POST['tanggalmasuk_suratmasuk']);
-	$kode_suratmasuk	                = mysqli_real_escape_string($db,$_POST['kode_suratmasuk']);
-    $nomorurut_suratmasuk               = mysqli_real_escape_string($db,$_POST['nomorurut_suratmasuk']);
-	$nomor_suratmasuk	                = mysqli_real_escape_string($db,$_POST['nomor_suratmasuk']);
-	$tanggalsurat_suratmasuk            = mysqli_real_escape_string($db,$_POST['tanggalsurat_suratmasuk']);
-    $pengirim                           = mysqli_real_escape_string($db,$_POST['pengirim']);
-	$kepada_suratmasuk		            = mysqli_real_escape_string($db,$_POST['kepada_suratmasuk']);
-	$perihal_suratmasuk   	            = mysqli_real_escape_string($db,$_POST['perihal_suratmasuk']);
-    $operator	                        = mysqli_real_escape_string($db,$_POST['operator']);
-	$disposisi1	                        = mysqli_real_escape_string($db,$_POST['disposisi1']);
-	$tanggal_disposisi1                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi1']);
-	$disposisi2	                        = mysqli_real_escape_string($db,$_POST['disposisi2']);
-	$tanggal_disposisi2                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi2']);
-    $disposisi3	                        = mysqli_real_escape_string($db,$_POST['disposisi3']);
-	$tanggal_disposisi3                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi3']);
+session_start();
+include '../../koneksi/koneksi.php';
 
-        date_default_timezone_set('Asia/Jakarta'); 
-		$tanggal_entry  = date("Y-m-d H:i:s");
-        $thnNow = date("Y");
-	
-	$nama_file_lengkap 		= $_FILES['file_suratmasuk']['name'];
-	$nama_file 		= substr($nama_file_lengkap, 0, strripos($nama_file_lengkap, '.'));
-	$ext_file		= substr($nama_file_lengkap, strripos($nama_file_lengkap, '.'));
-	$tipe_file 		= $_FILES['file_suratmasuk']['type'];
-	$ukuran_file 	= $_FILES['file_suratmasuk']['size'];
-	$tmp_file 		= $_FILES['file_suratmasuk']['tmp_name'];
-	
-    $tgl_masuk                  = date('Y-m-d H:i:s', strtotime($tanggalmasuk_suratmasuk));
-    $tgl_surat                  = date('Y-m-d', strtotime($tanggalsurat_suratmasuk));
-    $tgl_disp1                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi1));
-    $tgl_disp2                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi2));
-    $tgl_disp3                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi3));
-	
-    if (!($tgl_masuk=='') and !($kode_suratmasuk =='') and !($nomorurut_suratmasuk  =='') and !($nomor_suratmasuk =='') and !($tgl_surat =='') and !($pengirim =='')  and !($kepada_suratmasuk =='') and !($perihal_suratmasuk =='') and !($operator =='') and !($tanggal_entry =='') and !($disposisi1 =='') and !($tgl_disp1 =='') and !($disposisi3 =='') and !($tgl_disp3 =='') and   
-		($tipe_file == "application/pdf") and ($ukuran_file <= 10340000)){		
-		
-		$nama_baru = $thnNow.'-'.$nomorurut_suratmasuk . $ext_file;
-		$path = "../../admin/surat_masuk/".$nama_baru;
-		move_uploaded_file($tmp_file, $path);
-		
-		$sql = "INSERT INTO tb_suratmasuk(tanggalmasuk_suratmasuk, kode_suratmasuk, nomorurut_suratmasuk, nomor_suratmasuk, tanggalsurat_suratmasuk, pengirim, kepada_suratmasuk, perihal_suratmasuk, file_suratmasuk, operator, tanggal_entry, disposisi1, tanggal_disposisi1, disposisi2, tanggal_disposisi2, disposisi3, tanggal_disposisi3 )
-				values ('$tgl_masuk', '$kode_suratmasuk', '$nomorurut_suratmasuk ', '$nomor_suratmasuk', '$tgl_surat', '$pengirim', '$kepada_suratmasuk', '$perihal_suratmasuk', '$nama_baru', '$operator', '$tanggal_entry', '$disposisi1', '$tgl_disp1', '$disposisi2', '$tgl_disp2', '$disposisi3', '$tgl_disp3')";
-		$execute = mysqli_query($db, $sql);
-		
-		echo "<Center><h2><br>Terima Kasih<br>Surat masuk Telah Dimasukkan</h2></center>
-			<meta http-equiv='refresh' content='2;url=../datasuratmasuk.php'>";
+// Check if the necessary POST keys exist to avoid undefined index warnings
+$kode_surat = isset($_POST['kode_surat']) ? mysqli_real_escape_string($db, $_POST['kode_surat']) : '';
+$nomor_urut = isset($_POST['nomor_urut']) ? mysqli_real_escape_string($db, $_POST['nomor_urut']) : '';
+$nomor_surat = isset($_POST['nomor_surat']) ? mysqli_real_escape_string($db, $_POST['nomor_surat']) : '';
+$tanggal = isset($_POST['tanggal']) ? mysqli_real_escape_string($db, $_POST['tanggal']) : '';
+$tanggal_surat = isset($_POST['tanggal_surat']) ? mysqli_real_escape_string($db, $_POST['tanggal_surat']) : '';
+$pengirim = isset($_POST['pengirim']) ? mysqli_real_escape_string($db, $_POST['pengirim']) : '';
+$penerima = isset($_POST['nama_bagian_penerima']) ? mysqli_real_escape_string($db, $_POST['nama_bagian_penerima']) : '';
+$id_bagian_pengirim = isset($_POST['id_bagian_pengirim']) ? mysqli_real_escape_string($db, $_POST['id_bagian_pengirim']) : '';
+$id_bagian_penerima = isset($_POST['id_bagian_penerima']) ? mysqli_real_escape_string($db, $_POST['id_bagian_penerima']) : '';
+$perihal = isset($_POST['perihal']) ? mysqli_real_escape_string($db, $_POST['perihal']) : '';
+$kategori = isset($_POST['kategori']) ? mysqli_real_escape_string($db, $_POST['kategori']) : '';
+
+// Mengambil nilai disposisi dan tanggal disposisi
+$disposisi1 = !empty($_POST['disposisi1']) ? mysqli_real_escape_string($db, $_POST['disposisi1']) : NULL;
+$tanggal_disposisi1 = !empty($_POST['tanggal_disposisi1']) ? mysqli_real_escape_string($db, $_POST['tanggal_disposisi1']) : NULL;
+$disposisi2 = !empty($_POST['disposisi2']) ? mysqli_real_escape_string($db, $_POST['disposisi2']) : NULL;
+$tanggal_disposisi2 = !empty($_POST['tanggal_disposisi2']) ? mysqli_real_escape_string($db, $_POST['tanggal_disposisi2']) : NULL;
+$disposisi3 = !empty($_POST['disposisi3']) ? mysqli_real_escape_string($db, $_POST['disposisi3']) : NULL;
+$tanggal_disposisi3 = !empty($_POST['tanggal_disposisi3']) ? mysqli_real_escape_string($db, $_POST['tanggal_disposisi3']) : NULL;
+
+// Pengecekan dan pemformatan untuk tanggal surat dan disposisi
+$tanggal = DateTime::createFromFormat('d/m/Y h:i A', $_POST['tanggal']) ? DateTime::createFromFormat('d/m/Y h:i A', $_POST['tanggal'])->format('Y-m-d H:i:s') : NULL;
+$tanggal_surat = DateTime::createFromFormat('d/m/Y', $_POST['tanggal_surat']) ? DateTime::createFromFormat('d/m/Y', $_POST['tanggal_surat'])->format('Y-m-d') : NULL;
+$tanggal_disposisi1 = !empty($tanggal_disposisi1) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi1)->format('Y-m-d H:i:s') : NULL;
+$tanggal_disposisi2 = !empty($tanggal_disposisi2) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi2)->format('Y-m-d H:i:s') : NULL;
+$tanggal_disposisi3 = !empty($tanggal_disposisi3) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi3)->format('Y-m-d H:i:s') : NULL;
+
+// Validate the required fields
+if (
+	!empty($kode_surat) && !empty($nomor_urut) && !empty($nomor_surat) && !empty($tanggal_surat) && !empty($pengirim) &&
+	!empty($penerima) && !empty($perihal) && !empty($kategori) && !empty($tanggal) &&
+	($_FILES['file_surat']['type'] == "application/pdf") && ($_FILES['file_surat']['size'] <= 10340000)
+) {
+
+	// Handle file upload
+	$nama_file_lengkap = $_FILES['file_surat']['name'];
+	$nama_file = substr($nama_file_lengkap, 0, strripos($nama_file_lengkap, '.'));
+	$ext_file = substr($nama_file_lengkap, strripos($nama_file_lengkap, '.'));
+	$tmp_file = $_FILES['file_surat']['tmp_name'];
+
+	$thnNow = date("Y");
+	$nama_baru = $thnNow . '-' . $nomor_surat . $ext_file;
+	$path = "../../admin/surat/" . $nama_baru;
+
+	// Ensure the directory exists
+	if (!file_exists("../../admin/surat")) {
+		mkdir("../../admin/surat", 0777, true);
 	}
-	else{
-		echo "<Center><h2>Silahkan isi semua kolom lalu tekan submit<br>Terima Kasih</h2></center>
-			<meta http-equiv='refresh' content='2;url=../inputsuratmasuk.php'>";
+
+	// Attempt to move the uploaded file
+	if (move_uploaded_file($tmp_file, $path)) {
+
+		$sql = "INSERT INTO tb_surat 
+        (kode_surat, nomor_urut, nomor_surat, tanggal, tanggal_surat, pengirim, penerima, perihal, kategori, file_surat, 
+        id_bagian_pengirim, id_bagian_penerima, created_at, disposisi_1, tanggal_disposisi_1, disposisi_2, tanggal_disposisi_2, 
+        disposisi_3, tanggal_disposisi_3) 
+        VALUES 
+        ('$kode_surat', '$nomor_urut', '$nomor_surat', '$tanggal', '$tanggal_surat', '$pengirim', '$penerima', '$perihal', 
+        '$kategori', '$nama_baru', '$id_bagian_pengirim', '$id_bagian_penerima', CURRENT_TIMESTAMP, '$disposisi1', 
+        " . (is_null($tanggal_disposisi1) ? "NULL" : "'$tanggal_disposisi1'") . ", '$disposisi2', 
+        " . (is_null($tanggal_disposisi2) ? "NULL" : "'$tanggal_disposisi2'") . ", '$disposisi3', 
+        " . (is_null($tanggal_disposisi3) ? "NULL" : "'$tanggal_disposisi3'") . ")";
+
+		// Execute the query
+		if (mysqli_query($db, $sql)) {
+			echo "<Center><h2><br>Terima Kasih<br>Surat Telah Dimasukkan</h2></center>
+          <meta http-equiv='refresh' content='2;url=../datasuratmasuk.php'>";
+		} else {
+			// Print SQL error if the query fails
+			echo "<Center><h2>Error SQL: " . mysqli_error($db) . "</h2></center>";
+			echo "Kode Surat: $kode_surat<br>";
+			echo "Nomor Urut: $nomor_urut<br>";
+			echo "Nomor Surat: $nomor_surat<br>";
+			echo "Tanggal: $tanggal<br>";
+			echo "Tanggal Surat: $tanggal_surat<br>";
+			echo "Pengirim: $pengirim<br>";
+			echo "Penerima: $penerima<br>";
+			echo "ID Pengirim: $id_bagian_pengirim<br>";
+			echo "ID Penerima: $id_bagian_penerima<br>";
+			echo "Perihal: $perihal<br>";
+			echo "Kategori: $kategori<br>";
+			echo "Disposisi 1: $disposisi1<br>";
+			echo "Tanggal Disposisi 1: $tanggal_disposisi1<br>";
+			echo "Disposisi 2: $disposisi2<br>";
+			echo "Tanggal Disposisi 2: $tanggal_disposisi2<br>";
+			echo "Disposisi 3: $disposisi3<br>";
+			echo "Tanggal Disposisi 3: $tanggal_disposisi3<br>";
+		}
+	} else {
+		// Print file upload error
+		echo "<Center><h2>Gagal meng-upload file. Pastikan folder tujuan dapat diakses.<br> Error: " . $_FILES['file_surat']['error'] . "</h2></center>";
 	}
-	
-?>
-	
+} else {
+	echo "<Center><h2>Silahkan isi semua kolom lalu tekan submit<br>Terima Kasih</h2></center>
+          <meta http-equiv='refresh' content='2;url=../inputsuratmasuk.php'>";
+}

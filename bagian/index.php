@@ -70,36 +70,41 @@ include "login/ceksession.php";
                   <?php
                   include '../koneksi/koneksi.php';
 
-                  // Perbaiki query SQL dengan menambahkan tanda kutip yang hilang pada WHERE
-                  $sql1 = "SELECT * FROM tb_suratkeluar WHERE kepada_suratkeluar = '" . $_SESSION['nama'] . "'";
-                  $query1 = mysqli_query($db, $sql1);
-                  $jumlah1 = mysqli_num_rows($query1);
+                  // Dapatkan nama pengguna dari sesi
+                  $nama = $_SESSION['nama'];
+
+                  // Query untuk Surat Masuk dan Surat Keluar
+                  $sql1 = "SELECT * FROM tb_surat WHERE (kategori = 'Surat Masuk' AND pengirim = '$nama') OR (kategori = 'Surat Keluar' AND penerima = '$nama')";
+                  $query = mysqli_query($db, $sql1);
+                  $jumlah = mysqli_num_rows($query);
                   ?>
 
                   <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                       <div class="icon"><i class="fa fa-inbox"></i></div>
-                      <div class="count"><?php echo $jumlah1; ?></div>
+                      <div class="count"><?php echo $jumlah; ?></div>
+                      <h3>Surat Masuk</h3>
+                      <p>Telah diarsipkan atau dikirim</p>
+                    </div>
+                  </div>
+
+                  <?php
+                  // Query untuk Surat Keluar
+                  $sql2 = "SELECT * FROM tb_surat WHERE kategori = 'Surat Keluar' AND pengirim = '$nama'";
+                  $query2 = mysqli_query($db, $sql2);
+                  $jumlah2 = mysqli_num_rows($query2);
+                  ?>
+                  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                      <div class="icon"><i class="fa fa-send"></i></div>
+                      <div class="count"><?php echo $jumlah2; ?></div>
                       <h3>Surat Keluar</h3>
                       <p>Telah diarsipkan</p>
                     </div>
                   </div>
 
-                  <?php include '../koneksi/koneksi.php';
-                  $sql2    = "SELECT * FROM tb_suratkeluar WHERE nama_bagian = '" . $_SESSION['nama'] . "'";
-                  $query2    = mysqli_query($db, $sql2);
-                  $jumlah2   = mysqli_num_rows($query2);
-                  ?>
-                  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
-                      <div class="icon"><i class="fa fa-send"></i>
-                      </div>
-                      <div class="count"><?php echo "$jumlah2" ?></div>
-                      <h3>Surat Keluar</h3>
-                      <p>Telah Diarsipkan</p>
-                    </div>
-                  </div>
-                  <?php include '../koneksi/koneksi.php';
+                  <?php
+                  include '../koneksi/koneksi.php';
                   $sql3    = "SELECT * FROM tb_bagian";
                   $query3    = mysqli_query($db, $sql3);
                   $jumlah3   = mysqli_num_rows($query3);

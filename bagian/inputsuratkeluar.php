@@ -75,120 +75,241 @@ include "login/ceksession.php";
                 </div>
                 <div class="x_content">
                   <br />
-                  <form action="proses/proses_inputsuratkeluar.php" name="formsuratkeluar" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form action="proses/proses_inputsuratkeluar.php" name="formsuratmasuk" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Keluar <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kategori">Kategori <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" id="kategori" name="kategori" value="Surat Keluar" required="required" maxlength="35" placeholder="Masukkan kategori" class="form-control col-md-7 col-xs-12" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Keluar <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class='input-group date' id='myDatepicker4'>
-                          <input type='text' id="tanggalkeluar_suratkeluar" name="tanggalkeluar_suratkeluar" required="required" class="form-control" required="required" readonly="readonly" />
+                          <input type='text' id="tanggal" name="tanggal" required="required" class="form-control" required="required" readonly="readonly" />
                           <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Kode Surat <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Kode Surat <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" onkeyup="validAngka(this)" id="kode_suratkeluar" name="kode_suratkeluar" required="required" maxlength="7" placeholder="Masukkan Kode Surat" class="form-control col-md-7 col-xs-12">
-                        <br><a href="file/kode_klasifikasi_surat.xlsx"><b>Lihat Kode Klasifikasi Surat</b></a></br>
+                        <input type="text" onkeyup="validAngka(this)" id="kode_surat" name="kode_surat" required="required" maxlength="100" placeholder="Masukkan Kode Surat" class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
-                    <?php include '../koneksi/koneksi.php';
-                    $sql2     = "SELECT * FROM tb_suratkeluar ORDER BY nomor_suratkeluar DESC LIMIT 1";
-                    $query2    = mysqli_query($db, $sql2);
-                    $data     = mysqli_fetch_array($query2);
-                    $jumlah   = mysqli_num_rows($query2);
-                    $nomor = $data['nomor_suratkeluar'];
 
+                    <?php
+                    include '../koneksi/koneksi.php';
+                    // Fetch the last 'nomorurut_suratmasuk' and generate the next number
+                    $sql2 = "SELECT nomor_urut FROM tb_surat ORDER BY id DESC LIMIT 1";
+                    $query2 = mysqli_query($db, $sql2);
+                    $data = mysqli_fetch_array($query2);
+                    $jumlah = mysqli_num_rows($query2);
+                    $nomor = $data['nomor_urut'];
 
-                    if ($jumlah = 0) {
+                    if ($jumlah == 0) {
                       $nomorbaru = "0001";
                     } else {
                       $nomormax = substr($nomor, 0, 4);
                       $nomorbaru = intval($nomormax) + 1;
                     }
-
                     ?>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nomor Surat <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nomor Urut <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo "$nomorbaru" ?>" type="text" id="nomor_suratkeluar" name="nomor_suratkeluar" required="required" maxlength="35" placeholder="Masukkan Nomor Surat" class="form-control col-md-7 col-xs-12">
-                        <br>4 Digit Awal merupakan Nomor Surat (Pastikan Lihat Nomor Sebelumnya)</br>
+                        <input value="<?php echo "$nomorbaru"; ?>" type="text" onkeyup="validAngka(this)" id="nomor_urut" name="nomor_urut" required="required" maxlength="4" placeholder="Masukkan Nomor Urut Surat" class="form-control col-md-7 col-xs-12">
+                        <br>Nomor Urut harus 4 Digit (Pastikan Lihat Nomor Sebelumnya)</br>
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Bagian *<span class="required"></span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nomor Surat <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $_SESSION['nama']; ?>" type="text" id="nama_bagian" name="nama_bagian" required="required" readonly="readonly" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="nomor_surat" name="nomor_surat" required="required" maxlength="35" placeholder="Masukkan Nomor Surat" class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Surat <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Surat <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <fieldset>
                           <div class="control-group">
                             <div class="controls">
-                              <input type="text" class="form-control has-feedback-left" id="single_cal3" name="tanggalsurat_suratkeluar" placeholder="First Name" aria-describedby="inputSuccess2Status3" required="required" readonly="readonly">
+                              <input type="text" class="form-control has-feedback-left" id="single_cal3" name="tanggal_surat" placeholder="Tanggal Surat" aria-describedby="inputSuccess2Status3" required="required" readonly="readonly">
                               <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                              <span id="inputSuccess2Status3" class="sr-only">(success)</span>
                             </div>
                           </div>
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kepada_suratkeluar">
-                        Kepada <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Pengirim </label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select name="kepada_suratkeluar" id="kepada_suratkeluar" class="select2_single form-control" required="required" onchange="setIdBagian()">
-                          <option value="">- pilih -</option>
+                        <input value="<?php echo $_SESSION['nama']; ?>" type="text" id="pengirim" name="pengirim" readonly="readonly" class="form-control col-md-7 col-xs-12">
+                      </div>
+                    </div>
+
+                    <!-- Hidden input untuk id_bagian_pengirim -->
+                    <input type="hidden" id="id_bagian_pengirim" name="id_bagian_pengirim" value="<?php echo $_SESSION['id']; ?>">
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Kepada <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select name="penerima" id="penerima" class="select2_single form-control" tabindex="-1">
+                          <option value="">- Pilih Kepada -</option>
                           <?php
-                          include '../koneksi/koneksi.php';
                           $sql = "SELECT id_bagian, nama_bagian FROM tb_bagian";
                           $query = mysqli_query($db, $sql);
                           while ($data = mysqli_fetch_array($query)) {
-                            echo '<option value="' . $data['nama_bagian'] . '" data-id="' . $data['id_bagian'] . '">' . $data['nama_bagian'] . '</option>';
+                            echo '<option value="' . $data['id_bagian'] . '">' . $data['nama_bagian'] . '</option>';
                           }
                           ?>
                         </select>
-                        <input type="hidden" name="id_bagian" id="id_bagian">
+                      </div>
+                    </div>
+
+                    <!-- Hidden input untuk menyimpan id_bagian_penerima dan nama_bagian -->
+                    <input type="hidden" id="id_bagian_penerima" name="id_bagian_penerima" value="">
+                    <input type="hidden" id="nama_bagian_penerima" name="nama_bagian_penerima" value="">
+
+                    <script>
+                      // JavaScript untuk mengupdate nilai id_bagian_penerima dan nama_bagian_penerima
+                      document.getElementById('penerima').addEventListener('change', function() {
+                        var penerimaId = this.value;
+                        // Set value dari input hidden sesuai dengan id penerima yang dipilih
+                        document.getElementById('id_bagian_penerima').value = penerimaId;
+
+                        // Menambahkan nama bagian penerima ke input tersembunyi
+                        var selectedOption = this.options[this.selectedIndex];
+                        var namaBagian = selectedOption.text;
+                        document.getElementById('nama_bagian_penerima').value = namaBagian;
+                      });
+                    </script>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Perihal <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea id="perihal" name="perihal" required="required" class="form-control" rows="3" placeholder="Masukkan Perihal Surat"></textarea>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Perihal <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">File <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <textarea id="perihal_suratkeluar" name="perihal_suratkeluar" required="required" class="form-control" rows="3" placeholder='Masukkan Perihal Surat'></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">File <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input name="file_suratkeluar" accept="application/pdf" type="file" id="file_suratkeluar" class="form-control" autocomplete="off" /> *max 10mb
-                      </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <a href="datasuratkeluar.php" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Batal</a>
-                        <button type="submit" name="input" value="Simpan" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Simpan</button>
+                        <input name="file_surat" accept="application/pdf" type="file" id="file_surat" class="form-control" autocomplete="off" /> *max 10mb
                       </div>
                     </div>
 
+                    <!-- <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Operator </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input value="<?php echo $_SESSION['nama']; ?>" type="text" id="operator" name="operator" readonly="readonly" class="form-control col-md-7 col-xs-12">
+                      </div>
+                    </div> -->
+
+                    <!-- Disposisi 1 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Disposisi 1 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select name="disposisi1" class="select2_single form-control" tabindex="-1">
+                          <option></option>
+                          <?php
+                          $sql = "SELECT nama_bagian FROM tb_bagian";
+                          $query = mysqli_query($db, $sql);
+                          while ($data = mysqli_fetch_array($query)) {
+                            echo '<option value="' . $data['nama_bagian'] . '">' . $data['nama_bagian'] . '</option>';
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 1 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class='input-group date' id='myDatepicker'>
+                          <input type='text' id="tanggal_disposisi1" name="tanggal_disposisi1" class="form-control" />
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Disposisi 2 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Disposisi 2 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select name="disposisi2" class="select2_single form-control" tabindex="-1">
+                          <option></option>
+                          <?php
+                          $sql = "SELECT nama_bagian FROM tb_bagian";
+                          $query = mysqli_query($db, $sql);
+                          while ($data = mysqli_fetch_array($query)) {
+                            echo '<option value="' . $data['nama_bagian'] . '">' . $data['nama_bagian'] . '</option>';
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 2 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class='input-group date' id='myDatepicker'>
+                          <input type='text' id="tanggal_disposisi2" name="tanggal_disposisi2" class="form-control" />
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Disposisi 3 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Disposisi 3 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select name="disposisi3" class="select2_single form-control" tabindex="-1">
+                          <option></option>
+                          <?php
+                          $sql = "SELECT nama_bagian FROM tb_bagian";
+                          $query = mysqli_query($db, $sql);
+                          while ($data = mysqli_fetch_array($query)) {
+                            echo '<option value="' . $data['nama_bagian'] . '">' . $data['nama_bagian'] . '</option>';
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 3 </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class='input-group date' id='myDatepicker'>
+                          <input type='text' id="tanggal_disposisi3" name="tanggal_disposisi3" class="form-control" />
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Add more fields as necessary for your form structure -->
+
+                    <div class="form-group">
+                      <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
                   </form>
+
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -280,13 +401,6 @@ include "login/ceksession.php";
       if (!/^[0-9.]+$/.test(a.value)) {
         a.value = a.value.substring(0, a.value.length - 1000);
       }
-    }
-  </script>
-  <script>
-    function setIdBagian() {
-      var selectedOption = document.getElementById('kepada_suratkeluar').selectedOptions[0];
-      var idBagian = selectedOption.getAttribute('data-id');
-      document.getElementById('id_bagian').value = idBagian;
     }
   </script>
 </body>
