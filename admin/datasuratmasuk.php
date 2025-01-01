@@ -94,7 +94,7 @@ include "login/ceksession.php";
                       ?>
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Lihat</button>
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filter</button>
                   <a href="inputsuratmasuk.php">
                     <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
                   </a>
@@ -107,89 +107,102 @@ include "login/ceksession.php";
                   $bulan = isset($_POST['bulan']) ? $_POST['bulan'] : '';
                   $tahun = isset($_POST['tahun']) ? $_POST['tahun'] : '';
 
-                  // Query SQL dasar
-                  $sql1 = "SELECT * FROM tb_suratmasuk";
+                  // Ambil id_bagian dan nama dari session
+                  $nama = isset($_SESSION['nama']) ? $_SESSION['nama'] : '';
+                  $id_bagian = isset($_SESSION['id_bagian']) ? $_SESSION['id_bagian'] : '';
 
-                  // Jika bulan dan tahun dipilih, tambahkan kondisi WHERE
-                  if ($bulan != '' && $tahun != '') {
-                    $sql1 .= " WHERE MONTH(tanggalmasuk_suratmasuk) = '$bulan' AND YEAR(tanggalmasuk_suratmasuk) = '$tahun'";
-                  } elseif ($bulan != '') { // Jika hanya bulan yang dipilih
-                    $sql1 .= " WHERE MONTH(tanggalmasuk_suratmasuk) = '$bulan'";
-                  } elseif ($tahun != '') { // Jika hanya tahun yang dipilih
-                    $sql1 .= " WHERE YEAR(tanggalmasuk_suratmasuk) = '$tahun'";
+                  // Query SQL dasar
+                  $sql1 = "SELECT * FROM tb_surat WHERE kategori = 'Surat Masuk'";
+
+                  // Tambahkan kondisi untuk bulan, tahun, dan id_bagian jika ada
+                  $conditions = [];
+                  if ($bulan != '') {
+                    $conditions[] = "MONTH(tanggal_surat) = '$bulan'";
+                  }
+                  if ($tahun != '') {
+                    $conditions[] = "YEAR(tanggal_surat) = '$tahun'";
+                  }
+                  if ($id_bagian != '') {
+                    $conditions[] = "id_bagian_pengirim = '$id_bagian'";
                   }
 
-                  $sql1 .= " ORDER BY id_suratmasuk ASC";
+                  // Tambahkan pengurutan
+                  $sql1 .= " ORDER BY id ASC";
+
+                  // Jalankan query
                   $query1 = mysqli_query($db, $sql1);
+
+                  // Periksa apakah query berhasil
+                  if (!$query1) {
+                    die("Query Error: " . mysqli_error($db));
+                  }
+
+                  // Menghitung jumlah baris yang ditemukan
                   $total = mysqli_num_rows($query1);
 
+                  // Jika tidak ada data, tampilkan pesan
                   if ($total == 0) {
-                    echo "<center><h2>Belum Ada Data Surat Masuk</h2></center>";
+                    echo "<center><h2>Belum Ada Data Surat Keluar</h2></center>";
                   } else { ?>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>No Urut</th>
-                          <th>Tanggal Masuk</th>
+                          <th>Tanggal</th>
                           <th>Kode Surat</th>
                           <th>Tanggal Surat</th>
-                          <th>Pengirim</th>
                           <th>Nomor Surat</th>
-                          <th>Kepada</th>
                           <th>Perihal</th>
+                          <th>Pengirim</th>
+                          <th>Kepada</th>
                           <th>Disposisi</th>
                           <th>Aksi</th>
-
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        while ($data = mysqli_fetch_array($query1)) {
-                          echo '<tr>
-                  <td>' . $data['nomorurut_suratmasuk'] . '</td>
-                  <td>' . $data['tanggalmasuk_suratmasuk'] . '</td>
-                  <td>' . $data['kode_suratmasuk'] . '</td>
-                  <td>' . $data['tanggalsurat_suratmasuk'] . '</td>
-                  <td>' . $data['pengirim'] . '</td>
-                  <td>' . $data['nomor_suratmasuk'] . '</td>
-                  <td>' . $data['kepada_suratmasuk'] . '</td>
-                  <td>' . $data['perihal_suratmasuk'] . '</td>
-                  <td style="text-align:center;"> 
-                  <a href="disposisi.php?id_suratmasuk=' . $data['id_suratmasuk'] . '">
-                      <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                        <i class="fa fa-file-text-o"></i>
-                      </button>
-                    </a></td>
-                  <td style="text-align:center;">
-                    <a href="surat_masuk/' . $data['file_suratmasuk'] . '">
-                      <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                        <i class="fa fa-download"></i>
-                      </button>
-                    </a>
-                    <a href="cetak.php?id_suratmasuk=' . $data['id_suratmasuk'] . '" target="_blank">
-                      <button type="button" title="Unduh Disposisi" class="btn btn-info btn-xs">
-                        <i class="fa fa-download"></i>
-                      </button>
-                    </a>
-                    <a href="detail-suratmasuk.php?id_suratmasuk=' . $data['id_suratmasuk'] . '">
-                      <button type="button" title="Detail" class="btn btn-info btn-xs">
-                        <i class="fa fa-file-image-o"></i>
-                      </button>
-                    </a>
-                    <a href="editsuratmasuk.php?id_suratmasuk=' . $data['id_suratmasuk'] . '">
-                      <button type="button" title="Edit" class="btn btn-default btn-xs">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                    </a>
-                    <a onclick="return konfirmasi()" href="proses/proses_hapussuratmasuk.php?id_suratmasuk=' . $data['id_suratmasuk'] . '">
-                      <button type="button" title="Hapus" class="btn btn-danger btn-xs">
-                        <i class="fa fa-trash-o"></i>
-                      </button>
-                    </a>
-                  </td>
-                </tr>';
-                        }
-                        ?>
+                        $no = 1;
+                        while ($data = mysqli_fetch_array($query1)) { ?>
+                          <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $data['tanggal']; ?></td>
+                            <td><?= $data['kode_surat']; ?></td>
+                            <td><?= $data['tanggal_surat']; ?></td>
+                            <td><?= $data['nomor_surat']; ?></td>
+                            <td><?= $data['perihal']; ?></td>
+                            <td><?= $data['pengirim']; ?></td>
+                            <td><?= $data['penerima']; ?></td>
+                            <td style="text-align:center;">
+                              <a href="../cetak/disposisi.php?id=<?= $data['id'] ?>">
+                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
+                                  <i class="fa fa-file-text-o"></i>
+                                </button>
+                              </a>
+                            </td>
+                            <td style="text-align:center;">
+                              <a href="../cetak/cetak.php?id=<?= $data['id'] ?>">
+                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
+                                  <i class="fa fa-download"></i>
+                                </button>
+                              </a>
+                              <a href="detail-suratmasuk.php?id=<?= $data['id']; ?>">
+                                <button type="button" title="Detail" class="btn btn-info btn-xs">
+                                  <i class="fa fa-file-image-o"></i>
+                                </button>
+                              </a>
+                              <a href="editsuratmasuk.php?id=<?= $data['id']; ?>">
+                                <button type="button" title="Edit" class="btn btn-default btn-xs">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                              </a>
+                              <a onclick="return konfirmasi()" href="proses/proses_hapus_surat.php?id=<?= $data['id']; ?>">
+                                <button type="button" title="Hapus" class="btn btn-danger btn-xs">
+                                  <i class="fa fa-trash-o"></i>
+                                </button>
+                              </a>
+                            </td>
+                          </tr>
+                        <?php } ?>
                       </tbody>
                     </table>
                   <?php } ?>

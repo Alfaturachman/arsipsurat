@@ -1,110 +1,105 @@
 <?php
-	session_start();
-	include '../../koneksi/koneksi.php';
-    $id				                    = mysqli_real_escape_string($db,$_POST['id_suratmasuk']);
-	$tanggalmasuk_suratmasuk	        = mysqli_real_escape_string($db,$_POST['tanggalmasuk_suratmasuk']);
-	$kode_suratmasuk	                = mysqli_real_escape_string($db,$_POST['kode_suratmasuk']);
-    $nomorurut_suratmasuk               = mysqli_real_escape_string($db,$_POST['nomorurut_suratmasuk']);
-	$nomor_suratmasuk	                = mysqli_real_escape_string($db,$_POST['nomor_suratmasuk']);
-	$tanggalsurat_suratmasuk            = mysqli_real_escape_string($db,$_POST['tanggalsurat_suratmasuk']);
-    $pengirim                           = mysqli_real_escape_string($db,$_POST['pengirim']);
-	$kepada_suratmasuk		            = mysqli_real_escape_string($db,$_POST['kepada_suratmasuk']);
-	$perihal_suratmasuk   	            = mysqli_real_escape_string($db,$_POST['perihal_suratmasuk']);
-    $operator	                        = mysqli_real_escape_string($db,$_POST['operator']);
-	$disposisi1	                        = mysqli_real_escape_string($db,$_POST['disposisi1']);
-	$tanggal_disposisi1                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi1']);
-	$disposisi2	                        = mysqli_real_escape_string($db,$_POST['disposisi2']);
-	$tanggal_disposisi2                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi2']);
-    $disposisi3	                        = mysqli_real_escape_string($db,$_POST['disposisi3']);
-	$tanggal_disposisi3                 = mysqli_real_escape_string($db,$_POST['tanggal_disposisi3']);
+session_start();
+include '../../koneksi/koneksi.php';
 
-	$file_suratmasuk			            = $_FILES['file_suratmasuk']['name'];
-     date_default_timezone_set('Asia/Jakarta'); 
-		$tanggal_entry  = date("Y-m-d H:i:s");
-        $thnNow = date("Y");
-        $tgl_masuk                  = date('Y-m-d H:i:s', strtotime($tanggalmasuk_suratmasuk));
-        $tgl_surat                  = date('Y-m-d', strtotime($tanggalsurat_suratmasuk));
-        $tgl_disp1                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi1));
-        $tgl_disp2                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi2));
-        $tgl_disp3                  = date('Y-m-d H:i:s', strtotime($tanggal_disposisi3));
-	
-	$sql  		= "SELECT * FROM tb_suratmasuk where id_suratmasuk='".$id."'";                        
-	$query  	= mysqli_query($db, $sql);
-	$data 		= mysqli_fetch_array($query);
-	
-    //jika gambar tidak ada
-	if ($file_suratmasuk == ''){
-		$ext			= substr($data['file_suratmasuk'], strripos($data['file_suratmasuk'], '.'));	
-		$nama_b  		= $thnNow.'-'.$nomorurut_suratmasuk. $ext;
-		rename("../surat_masuk/".$data['file_suratmasuk'], "../surat_masuk/".$nama_b);
-		$sql = "UPDATE tb_suratmasuk set 
-						tanggalmasuk_suratmasuk     = '$tgl_masuk',
-						kode_suratmasuk    		    = '$kode_suratmasuk',
-                        nomorurut_suratmasuk        = '$nomorurut_suratmasuk',
-						nomor_suratmasuk 			= '$nomor_suratmasuk',
-						tanggalsurat_suratmasuk	    = '$tgl_surat',
-                        pengirim                    = '$pengirim',
-						kepada_suratmasuk           = '$kepada_suratmasuk',
-						perihal_suratmasuk		    = '$perihal_suratmasuk',
-                        operator            	    = '$operator',
-                        tanggal_entry               = '$tanggal_entry',
-                        disposisi1                  = '$disposisi1',
-                        tanggal_disposisi1          = '$tgl_disp1',
-                        disposisi2                  = '$disposisi2',
-                        tanggal_disposisi2          = '$tgl_disp2',
-                        disposisi3                  = '$disposisi3',
-                        tanggal_disposisi3          = '$tgl_disp3',
-						file_suratmasuk			= '$nama_b' 
-				where id_suratmasuk = $id";
-				
-		$execute = mysqli_query($db, $sql);			
-						
-		echo "<Center><h2><br>Data Surat masuk telah diubah</h2></center>
-		<meta http-equiv='refresh' content='2;url=../detail-suratmasuk.php?id_suratmasuk=".$id."'>";
-	}	
-	else{
-		
-        $tipe_file 		= $_FILES['file_suratmasuk']['type'];
-        $ukuran_file 	= $_FILES['file_suratmasuk']['size'];
-		if (($tipe_file == "application/pdf") and ($ukuran_file <= 10340000)){	
-			unlink("../surat_masuk/".$data['file_suratmasuk']);
-			$ext_file		= substr($file_suratmasuk, strripos($file_suratmasuk, '.'));			
-			$tmp_file 		= $_FILES['file_suratmasuk']['tmp_name'];
-			
-			$nama_baru = $thnNow.'-'.$nomorurut_suratmasuk. $ext_file;
-			$path = "../surat_masuk/".$nama_baru;
-			move_uploaded_file($tmp_file, $path);
-			
-			$sql = "UPDATE tb_suratmasuk set 
-						tanggalmasuk_suratmasuk     = '$tgl_masuk',
-						kode_suratmasuk    		    = '$kode_suratmasuk',
-                        nomorurut_suratmasuk        = '$nomorurut_suratmasuk',
-						nomor_suratmasuk 			= '$nomor_suratmasuk',
-						tanggalsurat_suratmasuk	    = '$tgl_surat',
-                        pengirim                    = '$pengirim',
-						kepada_suratmasuk           = '$kepada_suratmasuk',
-						perihal_suratmasuk		    = '$perihal_suratmasuk',
-                        operator            	    = '$operator',
-                        tanggal_entry               = '$tanggal_entry',
-                        disposisi1                  = '$disposisi1',
-                        tanggal_disposisi1          = '$tgl_disp1',
-                        disposisi2                  = '$disposisi2',
-                        tanggal_disposisi2          = '$tgl_disp2',
-                        disposisi3                  = '$disposisi3',
-                        tanggal_disposisi3          = '$tgl_disp3',
-						file_suratmasuk			= '$nama_baru' 
-				where id_suratmasuk = $id";
-				
-			$execute = mysqli_query($db, $sql);			
-		
-			echo "<Center><h2><br>Data Surat masuk telah diubah</h2></center>
-				<meta http-equiv='refresh' content='2;url=../detail-suratmasuk.php?id_suratmasuk=".$id."'>";			
-		}
-		else{
-			echo "<Center><h2><br>File yang anda masukkan tidak sesuai ketentuan<br>Silahkan Ulangi</h2></center>
-				<meta http-equiv='refresh' content='2;url=../editsuratmasuk.php?id_suratmasuk=".$id."'>";
-		}
-	
+$id = mysqli_real_escape_string($db, $_POST['id_surat']);
+$tanggal_surat = mysqli_real_escape_string($db, $_POST['tanggal_surat']);
+$kode_surat = mysqli_real_escape_string($db, $_POST['kode_surat']);
+$nomor_surat = mysqli_real_escape_string($db, $_POST['nomor_surat']);
+$pengirim = mysqli_real_escape_string($db, $_POST['pengirim']);
+$penerima = mysqli_real_escape_string($db, $_POST['penerima']);
+$perihal = mysqli_real_escape_string($db, $_POST['perihal']);
+$disposisi_1 = mysqli_real_escape_string($db, $_POST['disposisi_1']);
+$tanggal_disposisi_1 = mysqli_real_escape_string($db, $_POST['tanggal_disposisi_1']);
+$disposisi_2 = mysqli_real_escape_string($db, $_POST['disposisi_2']);
+$tanggal_disposisi_2 = mysqli_real_escape_string($db, $_POST['tanggal_disposisi_2']);
+$disposisi_3 = mysqli_real_escape_string($db, $_POST['disposisi_3']);
+$tanggal_disposisi_3 = mysqli_real_escape_string($db, $_POST['tanggal_disposisi_3']);
+
+$file_surat = $_FILES['file_surat']['name'];
+$file_tmp = $_FILES['file_surat']['tmp_name'];
+$file_type = $_FILES['file_surat']['type'];
+$file_size = $_FILES['file_surat']['size'];
+
+date_default_timezone_set('Asia/Jakarta');
+$tanggal_entry = date("Y-m-d H:i:s");
+$thnNow = date("Y");
+$tgl_surat = date('Y-m-d', strtotime($tanggal_surat));
+$tgl_disp1 = date('Y-m-d H:i:s', strtotime($tanggal_disposisi_1));
+$tgl_disp2 = date('Y-m-d H:i:s', strtotime($tanggal_disposisi_2));
+$tgl_disp3 = date('Y-m-d H:i:s', strtotime($tanggal_disposisi_3));
+
+$sql = "SELECT * FROM tb_surat WHERE id='$id'";
+$query = mysqli_query($db, $sql);
+$data = mysqli_fetch_array($query);
+
+// Process file if it is uploaded
+if ($file_surat == '') {
+	// If no new file, retain the existing file name
+	$nama_baru = $data['file_surat'];  // Keep the old file name
+
+	// Update database without changing the file
+	$sql = "UPDATE tb_surat SET 
+                tanggal_surat = '$tgl_surat',
+                kode_surat = '$kode_surat',
+                nomor_surat = '$nomor_surat',
+                pengirim = '$pengirim',
+                penerima = '$penerima',
+                perihal = '$perihal',
+                disposisi_1 = '$disposisi_1',
+                tanggal_disposisi_1 = '$tgl_disp1',
+                disposisi_2 = '$disposisi_2',
+                tanggal_disposisi_2 = '$tgl_disp2',
+                disposisi_3 = '$disposisi_3',
+                tanggal_disposisi_3 = '$tgl_disp3',
+                file_surat = '$nama_baru'
+            WHERE id = '$id'";
+
+	$execute = mysqli_query($db, $sql);
+
+	if (!$execute) {
+		echo "Error updating record: " . mysqli_error($db);
+	} else {
+		echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
+    <meta http-equiv='refresh' content='2;url=../detail-surat.php?id=" . $id . "'>";
 	}
-	?>
-	
+} else {
+	// Validate file type and size before uploading
+	if (($file_type == "application/pdf") && ($file_size <= 10340000)) {
+		// Delete old file if it exists
+		if (file_exists("../../admin/surat_masuk/" . $data['file_surat'])) {
+			unlink("../../admin/surat_masuk/" . $data['file_surat']);
+		}
+
+		// Upload the new file
+		$ext_file = substr($file_surat, strripos($file_surat, '.'));
+		$nama_baru = $thnNow . '-' . $kode_surat . $ext_file;
+		$path = "../../admin/surat_masuk/" . $nama_baru;
+		move_uploaded_file($file_tmp, $path);
+
+		// Update database with new file
+		$sql = "UPDATE tb_surat SET 
+                    tanggal_surat = '$tgl_surat',
+                    kode_surat = '$kode_surat',
+                    nomor_surat = '$nomor_surat',
+                    pengirim = '$pengirim',
+                    penerima = '$penerima',
+                    perihal = '$perihal',
+                    disposisi_1 = '$disposisi_1',
+                    tanggal_disposisi_1 = '$tgl_disp1',
+                    disposisi_2 = '$disposisi_2',
+                    tanggal_disposisi_2 = '$tgl_disp2',
+                    disposisi_3 = '$disposisi_3',
+                    tanggal_disposisi_3 = '$tgl_disp3',
+                    file_surat = '$nama_baru'
+                WHERE id = '$id'";
+
+		$execute = mysqli_query($db, $sql);
+
+		echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
+        <meta http-equiv='refresh' content='2;url=../detail-surat.php?id=" . $id . "'>";
+	} else {
+		echo "<Center><h2><br>File yang Anda masukkan tidak sesuai ketentuan. Silakan ulangi.</h2></center>
+        <meta http-equiv='refresh' content='2;url=../editsurat.php?id=" . $id . "'>";
+	}
+}

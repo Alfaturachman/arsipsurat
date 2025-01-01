@@ -202,12 +202,12 @@ include "login/ceksession.php";
                                   <i class="fa fa-download"></i>
                                 </button>
                               </a>
-                              <a href="detail-surat.php?id=<?= $data['id']; ?>">
+                              <a href="detail-suratmasuk.php?id=<?= $data['id']; ?>">
                                 <button type="button" title="Detail" class="btn btn-info btn-xs">
                                   <i class="fa fa-file-image-o"></i>
                                 </button>
                               </a>
-                              <a href="editsurat.php?id=<?= $data['id']; ?>">
+                              <a href="editsuratmasuk.php?id=<?= $data['id']; ?>">
                                 <button type="button" title="Edit" class="btn btn-default btn-xs">
                                   <i class="fa fa-edit"></i>
                                 </button>
