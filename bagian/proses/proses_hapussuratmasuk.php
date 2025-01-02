@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 
 
 		if ($query) {
-			unlink("../../admin/surat_masuk/" . $data2['file_suratmasuk']);
+			unlink("../../admin/surat_masuk/" . $data2['file_surat']);
 			echo "<Center><h2><br>Data Surat masuk telah Dihapus</h2></center>
 				<meta http-equiv='refresh' content='2;url=../datasuratmasuk.php'>";
 		} else {

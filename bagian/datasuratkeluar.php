@@ -214,7 +214,7 @@ include "login/ceksession.php";
                                   <i class="fa fa-edit"></i>
                                 </button>
                               </a>
-                              <a onclick="return konfirmasi()" href="proses/proses_hapus_surat.php?id=<?= $data['id']; ?>">
+                              <a onclick="return konfirmasi()" href="proses/proses_hapussuratkeluar.php?id=<?= $data['id']; ?>">
                                 <button type="button" title="Hapus" class="btn btn-danger btn-xs">
                                   <i class="fa fa-trash-o"></i>
                                 </button>
