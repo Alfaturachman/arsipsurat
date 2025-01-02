@@ -166,7 +166,8 @@ include "login/ceksession.php";
                           <th>Perihal</th>
                           <th>Pengirim</th>
                           <th>Kepada</th>
-                          <th>Disposisi</th>
+                          <th>Disposisi 1</th>
+                          <th>Disposisi 2</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
@@ -192,6 +193,13 @@ include "login/ceksession.php";
                             </td>
                             <td style="text-align:center;">
                               <a href="../cetak/cetak.php?id=<?= $data['id'] ?>">
+                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
+                                  <i class="fa fa-file-text-o"></i>
+                                </button>
+                              </a>
+                            </td>
+                            <td style="text-align:center;">
+                              <a href="../admin/surat_masuk/<?= $data['file_surat'] ?>" download>
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">
                                   <i class="fa fa-download"></i>
                                 </button>

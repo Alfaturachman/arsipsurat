@@ -35,11 +35,11 @@ $data = mysqli_fetch_array($query);
 
 // Process file if it is uploaded
 if ($file_surat == '') {
-	// If no new file, retain the existing file name
-	$nama_baru = $data['file_surat'];  // Keep the old file name
+    // If no new file, retain the existing file name
+    $nama_baru = $data['file_surat'];  // Keep the old file name
 
-	// Update database without changing the file
-	$sql = "UPDATE tb_surat SET 
+    // Update database without changing the file
+    $sql = "UPDATE tb_surat SET 
                 tanggal_surat = '$tgl_surat',
                 kode_surat = '$kode_surat',
                 nomor_surat = '$nomor_surat',
@@ -55,30 +55,30 @@ if ($file_surat == '') {
                 file_surat = '$nama_baru'
             WHERE id = '$id'";
 
-	$execute = mysqli_query($db, $sql);
+    $execute = mysqli_query($db, $sql);
 
-	if (!$execute) {
-		echo "Error updating record: " . mysqli_error($db);
-	} else {
-		echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
+    if (!$execute) {
+        echo "Error updating record: " . mysqli_error($db);
+    } else {
+        echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
     <meta http-equiv='refresh' content='2;url=../detail-surat.php?id=" . $id . "'>";
-	}
+    }
 } else {
-	// Validate file type and size before uploading
-	if (($file_type == "application/pdf") && ($file_size <= 10340000)) {
-		// Delete old file if it exists
-		if (file_exists("../../admin/surat_masuk/" . $data['file_surat'])) {
-			unlink("../../admin/surat_masuk/" . $data['file_surat']);
-		}
+    // Validate file type and size before uploading
+    if (($file_type == "application/pdf") && ($file_size <= 10340000)) {
+        // Delete old file if it exists
+        if (file_exists("../../admin/surat_keluar/" . $data['file_surat'])) {
+            unlink("../../admin/surat_keluar/" . $data['file_surat']);
+        }
 
-		// Upload the new file
-		$ext_file = substr($file_surat, strripos($file_surat, '.'));
-		$nama_baru = $thnNow . '-' . $kode_surat . $ext_file;
-		$path = "../../admin/surat_masuk/" . $nama_baru;
-		move_uploaded_file($file_tmp, $path);
+        // Upload the new file
+        $ext_file = substr($file_surat, strripos($file_surat, '.'));
+        $nama_baru = $thnNow . '-' . $kode_surat . $ext_file;
+        $path = "../../admin/surat_keluar/" . $nama_baru;
+        move_uploaded_file($file_tmp, $path);
 
-		// Update database with new file
-		$sql = "UPDATE tb_surat SET 
+        // Update database with new file
+        $sql = "UPDATE tb_surat SET 
                     tanggal_surat = '$tgl_surat',
                     kode_surat = '$kode_surat',
                     nomor_surat = '$nomor_surat',
@@ -94,12 +94,12 @@ if ($file_surat == '') {
                     file_surat = '$nama_baru'
                 WHERE id = '$id'";
 
-		$execute = mysqli_query($db, $sql);
+        $execute = mysqli_query($db, $sql);
 
-		echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
+        echo "<Center><h2><br>Data Surat Telah Diubah</h2></center>
         <meta http-equiv='refresh' content='2;url=../detail-surat.php?id=" . $id . "'>";
-	} else {
-		echo "<Center><h2><br>File yang Anda masukkan tidak sesuai ketentuan. Silakan ulangi.</h2></center>
+    } else {
+        echo "<Center><h2><br>File yang Anda masukkan tidak sesuai ketentuan. Silakan ulangi.</h2></center>
         <meta http-equiv='refresh' content='2;url=../editsurat.php?id=" . $id . "'>";
-	}
+    }
 }

@@ -88,170 +88,108 @@ include "login/ceksession.php";
                     $tgl_disposisi_3 = date('m-d-Y', strtotime($data['tanggal_disposisi_3']));
                     ?>
 
-                    <input type=hidden name="id_suratmasuk" value="<?php echo $id; ?>">
+                    <input type="hidden" name="id_surat" value="<?php echo $id; ?>">
+
+                    <!-- Tanggal Surat -->
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Masuk <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Surat <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='myDatepicker4'>
-                          <input value="<?php echo "$tgl_masuk" ?>" type='text' id="tanggalmasuk_suratmasuk" name="tanggalmasuk_suratmasuk" required="required" class="form-control" required="required" readonly="readonly" />
-                          <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                          </span>
-                        </div>
+                        <input type="text" value="<?php echo $tgl_surat; ?>" class="form-control" id="tanggal_surat" name="tanggal_surat" required="required" readonly="readonly" />
+                      </div>
+                    </div>
+
+                    <!-- Kode Surat -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Kode Surat <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input value="<?php echo $data['kode_surat']; ?>" type="text" id="kode_surat" name="kode_surat" required="required" class="form-control">
+                      </div>
+                    </div>
+
+                    <!-- Nomor Surat -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Nomor Surat <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input value="<?php echo $data['nomor_surat']; ?>" type="text" id="nomor_surat" name="nomor_surat" required="required" class="form-control">
+                      </div>
+                    </div>
+
+                    <!-- Pengirim -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Pengirim <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input value="<?php echo $data['pengirim']; ?>" type="text" id="pengirim" name="pengirim" required="required" class="form-control">
+                      </div>
+                    </div>
+
+                    <!-- Penerima -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Penerima <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input value="<?php echo $data['penerima']; ?>" type="text" id="penerima" name="penerima" required="required" class="form-control">
+                      </div>
+                    </div>
+
+                    <!-- Perihal -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Perihal <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea id="perihal" name="perihal" required="required" class="form-control"><?php echo $data['perihal']; ?></textarea>
+                      </div>
+                    </div>
+
+                    <!-- File Surat -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">File Surat <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input name="file_surat" accept="application/pdf" type="file" id="file_surat" class="form-control">
+                        <a href="<?php echo 'surat_masuk/' . $data['file_surat']; ?>"><b>Lihat File Sebelumnya</b></a> (Maksimal 10 MB)
+                      </div>
+                    </div>
+
+                    <!-- Disposisi 1 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Disposisi 1</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea id="disposisi_1" name="disposisi_1" class="form-control"><?php echo $data['disposisi_1']; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Kode Surat <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Disposisi 1</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $data['kode_suratmasuk']; ?>" type="text" onkeyup="validAngka(this)" id="kode_suratmasuk" name="kode_suratmasuk" required="required" maxlength="7" placeholder="Masukkan Kode Surat" class="form-control col-md-7 col-xs-12">
+                        <input type="text" value="<?php echo $tgl_disposisi_1; ?>" class="form-control" id="tanggal_disposisi_1" name="tanggal_disposisi_1" />
+                      </div>
+                    </div>
+
+                    <!-- Disposisi 2 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Disposisi 2</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea id="disposisi_2" name="disposisi_2" class="form-control"><?php echo $data['disposisi_2']; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nomor Urut <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Disposisi 2</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $data['nomorurut_suratmasuk']; ?>" type="text" onkeyup="validAngka(this)" id="nomorurut_suratmasuk" name="nomorurut_suratmasuk" required="required" maxlength="4" placeholder="Masukkan Nomor Urut Surat" class="form-control col-md-7 col-xs-12">
+                        <input type="text" value="<?php echo $tgl_disposisi_2; ?>" class="form-control" id="tanggal_disposisi_2" name="tanggal_disposisi_2" />
+                      </div>
+                    </div>
+
+                    <!-- Disposisi 3 -->
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Disposisi 3</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea id="disposisi_3" name="disposisi_3" class="form-control"><?php echo $data['disposisi_3']; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nomor Surat <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Disposisi 3</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $data['nomor_suratmasuk']; ?>" type="text" id="nomor_suratmasuk" name="nomor_suratmasuk" required="required" maxlength="35" placeholder="Masukkan Nomor Surat" class="form-control col-md-7 col-xs-12">
+                        <input type="text" value="<?php echo $tgl_disposisi_3; ?>" class="form-control" id="tanggal_disposisi_3" name="tanggal_disposisi_3" />
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Surat <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <fieldset>
-                          <div class="control-group">
-                            <div class="controls">
-                              <input value="<?php echo "$tgl_surat" ?>" type="text" class="form-control has-feedback-left" id="single_cal3" name="tanggalsurat_suratmasuk" placeholder="First Name" aria-describedby="inputSuccess2Status3" required="required" readonly="readonly">
-                              <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                              <span id="inputSuccess2Status3" class="sr-only">(success)</span>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Pengirim <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $data['pengirim']; ?>" type="text" id="pengirim" name="pengirim" required="required" placeholder="Masukkan Asal/Pengirim Surat" class="form-control col-md-7 col-xs-12">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Kepada <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $data['kepada_suratmasuk']; ?>" type="text" id="kepada_suratmasuk" name="kepada_suratmasuk" required="required" placeholder="Masukkan Tujuan Surat" class="form-control col-md-7 col-xs-12">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Perihal <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <textarea id="perihal_suratmasuk" name="perihal_suratmasuk" required="required" class="form-control" rows="3" placeholder='Masukkan Perihal Surat'><?php echo $data['perihal_suratmasuk']; ?></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">File <span class="required">*</span>
-                      </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input name="file_suratmasuk" accept="application/pdf" type="file" id="file_suratmasuk" class="form-control" autocomplete="off" /><a href="<?php echo 'surat_masuk/' . $data['file_suratmasuk'] . '' ?>"><b>Lihat File Sebelumnya</b></a></input> (Maksimal 10 MB )
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Operator </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input value="<?php echo $_SESSION['nama']; ?>" type="text" id="operator" name="operator" readonly="readonly" class="form-control col-md-7 col-xs-12">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Disposisi 1 </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select name="disposisi1" class="select2_single form-control" tabindex="-1">
-                          <option value="<?php echo $data['disposisi1']; ?>"><?php echo $data['disposisi1']; ?></option>
-                          <option></option>
-                          <?php include '../koneksi/koneksi.php';
-                          $sql2      = "SELECT nama_bagian FROM tb_bagian";
-                          $query2    = mysqli_query($db, $sql2);
-                          while ($data2 = mysqli_fetch_array($query2)) {
-                            echo '<option value="' . $data2['nama_bagian'] . '">' . $data2['nama_bagian'] . '</option>';
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 1 </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='myDatepicker'>
-                          <input value="<?php echo "$tgl_disp1" ?>" type='text' id="tanggal_disposisi1" name="tanggal_disposisi1" class="form-control" />
-                          <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Disposisi 2 </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select name="disposisi2" class="select2_single form-control" tabindex="-1">
-                          <option value="<?php echo $data['disposisi2']; ?>"><?php echo $data['disposisi2']; ?></option>
-                          <option></option>
-                          <?php include '../koneksi/koneksi.php';
-                          $sql3      = "SELECT nama_bagian FROM tb_bagian";
-                          $query3    = mysqli_query($db, $sql3);
-                          while ($data3 = mysqli_fetch_array($query3)) {
-                            echo '<option value="' . $data3['nama_bagian'] . '">' . $data3['nama_bagian'] . '</option>';
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 2</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='datetimepicker6'>
-                          <input value="<?php echo "$tgl_disp2" ?>" type='text' id="tanggal_disposisi2" name="tanggal_disposisi2" class="form-control" />
-                          <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Disposisi 3 </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select name="disposisi3" class="select2_single form-control" tabindex="-1">
-                          <option value="<?php echo $data['disposisi3']; ?>"><?php echo $data['disposisi3']; ?></option>
-                          <option></option>
-                          <?php include '../koneksi/koneksi.php';
-                          $sql4      = "SELECT nama_bagian FROM tb_bagian";
-                          $query4    = mysqli_query($db, $sql4);
-                          while ($data4 = mysqli_fetch_array($query4)) {
-                            echo '<option value="' . $data4['nama_bagian'] . '">' . $data4['nama_bagian'] . '</option>';
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 3 </label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='datetimepicker7'>
-                          <input value="<?php echo "$tgl_disp3" ?>" type='text' id="tanggal_disposisi3" name="tanggal_disposisi3" class="form-control" />
-                          <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+
+                    <!-- Button -->
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

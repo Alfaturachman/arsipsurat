@@ -67,14 +67,14 @@ if ($file_surat == '') {
 	// Validate file type and size before uploading
 	if (($file_type == "application/pdf") && ($file_size <= 10340000)) {
 		// Delete old file if it exists
-		if (file_exists("../../admin/surat_masuk/" . $data['file_surat'])) {
-			unlink("../../admin/surat_masuk/" . $data['file_surat']);
+		if (file_exists("../../admin/surat_keluar/" . $data['file_surat'])) {
+			unlink("../../admin/surat_keluar/" . $data['file_surat']);
 		}
 
 		// Upload the new file
 		$ext_file = substr($file_surat, strripos($file_surat, '.'));
 		$nama_baru = $thnNow . '-' . $kode_surat . $ext_file;
-		$path = "../../admin/surat_masuk/" . $nama_baru;
+		$path = "../../admin/surat_keluar/" . $nama_baru;
 		move_uploaded_file($file_tmp, $path);
 
 		// Update database with new file

@@ -45,11 +45,11 @@ if (
 
 	$thnNow = date("Y");
 	$nama_baru = $thnNow . '-' . $nomor_surat . $ext_file;
-	$path = "../../admin/surat/" . $nama_baru;
+	$path = "../../admin/surat_masuk/" . $nama_baru;
 
 	// Ensure the directory exists
-	if (!file_exists("../../admin/surat")) {
-		mkdir("../../admin/surat", 0777, true);
+	if (!file_exists("../../admin/surat_masuk")) {
+		mkdir("../../admin/surat_masuk", 0777, true);
 	}
 
 	// Attempt to move the uploaded file
