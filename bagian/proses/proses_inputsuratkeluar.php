@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../koneksi/koneksi.php';
+date_default_timezone_set('Asia/Jakarta'); 
 
 // Check if the necessary POST keys exist to avoid undefined index warnings
 $kode_surat = isset($_POST['kode_surat']) ? mysqli_real_escape_string($db, $_POST['kode_surat']) : '';
@@ -24,8 +25,8 @@ $disposisi3 = !empty($_POST['disposisi3']) ? mysqli_real_escape_string($db, $_PO
 $tanggal_disposisi3 = !empty($_POST['tanggal_disposisi3']) ? mysqli_real_escape_string($db, $_POST['tanggal_disposisi3']) : NULL;
 
 // Pengecekan dan pemformatan untuk tanggal surat dan disposisi
-$tanggal = DateTime::createFromFormat('d/m/Y h:i A', $_POST['tanggal']) ? DateTime::createFromFormat('d/m/Y h:i A', $_POST['tanggal'])->format('Y-m-d H:i:s') : NULL;
-$tanggal_surat = DateTime::createFromFormat('d/m/Y', $_POST['tanggal_surat']) ? DateTime::createFromFormat('d/m/Y', $_POST['tanggal_surat'])->format('Y-m-d') : NULL;
+$tanggal = date('Y-m-d H:i:s', strtotime($tanggal));
+$tanggal_surat = date('Y-m-d', strtotime($tanggal_surat));
 $tanggal_disposisi1 = !empty($tanggal_disposisi1) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi1)->format('Y-m-d H:i:s') : NULL;
 $tanggal_disposisi2 = !empty($tanggal_disposisi2) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi2)->format('Y-m-d H:i:s') : NULL;
 $tanggal_disposisi3 = !empty($tanggal_disposisi3) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi3)->format('Y-m-d H:i:s') : NULL;
