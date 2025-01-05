@@ -74,7 +74,6 @@ include "login/ceksession.php";
                                 <div class="x_content">
                                     <br />
                                     <form method="get" action="laporan/cetakmasuk.php" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Bulan <span class="required">*</span>
                                             </label>
@@ -94,44 +93,39 @@ include "login/ceksession.php";
                                                     <option value="11">November</option>
                                                     <option value="12">Desember</option>
                                                 </select>
-
                                             </div>
                                         </div>
-                                       
+
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Tahun<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <select name="tahun" class="form-control">
-                                                <?php
-                                                        $tg_awal= date('Y')-8;
-                                                        $tgl_akhir= date('Y')+10;
-                                                        for ($i=$tgl_akhir; $i>=$tg_awal; $i--)
-                                                        {
+                                                <select name="tahun" class="form-control">
+                                                    <?php
+                                                    $tg_awal = date('Y') - 8;
+                                                    $tgl_akhir = date('Y') + 10;
+                                                    for ($i = $tgl_akhir; $i >= $tg_awal; $i--) {
                                                         echo "
                                                         <option value='$i'";
-                                                        if(date('Y')==$i){echo "selected";}
-                                                        echo">$i</option>";
+                                                        if (date('Y') == $i) {
+                                                            echo "selected";
                                                         }
-                                                        ?>
-                                            </select>
+                                                        echo ">$i</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
-                                       
-                                       
                                         <div class="ln_solid"></div>
                                         <div class="form-group">
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                               
+
                                                 <button type="submit" name="input" value="Simpan" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Cek Data</button>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

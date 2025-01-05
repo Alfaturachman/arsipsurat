@@ -18,100 +18,79 @@ include '../../koneksi/koneksi.php';
 <body>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <TABLE WIDTH="100%">
-                <TR>
-                    <TD ALIGN="CENTER" WIDTH="60%">
-                        <FONT SIZE="5">
-                            <B>PEMERINTAH PROVINSI JAWA TENGAH</B>
-                            <br>
+            <table width="100%">
+                <tr>
+                    <td align="center" width="60%">
+                        <font size="5">
+                            <b>PEMERINTAH PROVINSI JAWA TENGAH</b><br>
                             DINAS PEKERJAAN UMUM<br> SUMBER DAYA AIR DAN PENATAAN RUANG<br>
-                            Jl. Madukoro Blok AA-BB TELP. 7608391, 7608374, 7608371 FAX, <BR>
-                            7612524 SEMARANG 50144,
-                            <BR>
-
-                            <FONT SIZE="4">
-                                Email: pusdataru@jatengprov.go.id, dpusdataru@jatengprov.go.id
-                            </FONT>
-                    </TD>
-                </TR>
-            </TABLE>
+                            Jl. Madukoro Blok AA-BB TELP. 7608391, 7608374, 7608371 FAX,<br>
+                            7612524 SEMARANG 50144,<br>
+                        </font>
+                        <font size="4">
+                            Email: pusdataru@jatengprov.go.id, dpusdataru@jatengprov.go.id
+                        </font>
+                    </td>
+                </tr>
+            </table>
             <hr style="border: 2px solid;">
             <br>
             <?php
-            $nama_bulan = array('', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember', strtotime($_GET['bulan']));
-            if (isset($_GET['bulan']) && $_GET['tahun']) {
-                $bulan = $_GET['bulan'];
-                $tahun = $_GET['tahun'];
+            $nama_bulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+            if (!empty($_GET['bulan']) && !empty($_GET['tahun'])) {
+                $bulan = intval($_GET['bulan']);
+                $tahun = intval($_GET['tahun']);
                 $no = 1;
-                $sql1 = mysqli_query($db, "SELECT * FROM tb_suratkeluar WHERE MONTH(tanggalkeluar_suratkeluar)='$bulan' AND YEAR(tanggalkeluar_suratkeluar)='$tahun'") or die($db->error);
-                $suratmasuk = mysqli_fetch_array($sql1);
+
+                $stmt = $db->prepare("SELECT * FROM tb_surat WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ? AND kategori = 'Surat Keluar'");
+                $stmt->bind_param('ii', $bulan, $tahun);
+                $stmt->execute();
+                $result = $stmt->get_result();
             ?>
-                <FONT SIZE="5">
-                    <center><B>Laporan Cetak Surat Keluar<br> <?php echo $nama_bulan[$_GET['bulan']]; ?>&nbsp;
-                            <?php echo $_GET['tahun']; ?><br /></b>
-                </FONT>
+                <font size="5">
+                    <center>
+                        <b>Laporan Cetak Surat Keluar<br> <?= $nama_bulan[$bulan]; ?>&nbsp;<?= $tahun; ?><br></b>
+                    </center>
+                </font>
                 <br><br>
                 <table width="100%" align="center" cellspacing="0" cellpadding="2" border="1px" class="style1">
-                    <tr>
-
-                        <th>Nomor Surat</th>
-                        <th>Tanggal Keluar</th>
-                        <th>Kode Surat</th>
-                        <th>Tanggal Surat</th>
-                        <th>Bagian</th>
-                        <th>Kepada</th>
-                        <th>Perihal</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>No Urut</th>
+                            <th>Tanggal Keluar</th>
+                            <th>Kode Surat</th>
+                            <th>Tanggal Surat</th>
+                            <th>Pengirim</th>
+                            <th>Nomor Surat</th>
+                            <th>Kepada</th>
+                            <th>Perihal</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $nama_bulan = array('', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember', strtotime($_GET['bulan']));
-                        if (isset($_GET['bulan']) && $_GET['tahun']) {
-                            $bulan = $_GET['bulan'];
-                            $tahun = $_GET['tahun'];
-                            $no = 1;
-                            $sql1 = mysqli_query($db, "SELECT * FROM tb_suratkeluar WHERE MONTH(tanggalkeluar_suratkeluar)='$bulan' AND YEAR(tanggalkeluar_suratkeluar)='$tahun'") or die($db->error);
-                            while ($suratmasukk = mysqli_fetch_array($sql1)) {
-                        ?>
-                                <tr>
-                                    <td>
-                                        <center><?php echo $suratmasukk['nomor_suratkeluar']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['tanggalkeluar_suratkeluar']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['kode_suratkeluar']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['tanggalsurat_suratkeluar']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['nama_bagian']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['kepada_suratkeluar']; ?>
-                                    </td>
-                                    <td>
-                                        <center><?php echo $suratmasukk['perihal_suratkeluar']; ?>
-                                    </td>
-                                    
-                                </tr>
-                            <?php
-                            }
-                            ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td align="center"><?= htmlspecialchars($row['nomor_urut']); ?></td>
+                                <td align="center"><?= date('d-m-Y', strtotime($row['tanggal'])); ?></td>
+                                <td align="center"><?= htmlspecialchars($row['kode_surat']); ?></td>
+                                <td align="center"><?= date('d-m-Y', strtotime($row['tanggal_surat'])); ?></td>
+                                <td align="center"><?= htmlspecialchars($row['pengirim']); ?></td>
+                                <td align="center"><?= htmlspecialchars($row['nomor_surat']); ?></td>
+                                <td align="center"><?= htmlspecialchars($row['penerima']); ?></td>
+                                <td align="center"><?= htmlspecialchars($row['perihal']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
                     </tbody>
-                <?php
-                        }
-                ?>
+                </table>
             <?php
+            } else {
+                echo "<center><b>Silakan pilih bulan dan tahun untuk mencetak laporan.</b></center>";
             }
             ?>
-                </table>
-        </div><!-- col-lg-12-->
-    </div><!-- /row -->
+        </div>
+    </div>
     <script>
-        window.print()
+        window.print();
     </script>
 </body>
 
