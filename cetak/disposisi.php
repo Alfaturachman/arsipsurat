@@ -10,23 +10,11 @@
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 10mm 10mm 10mm 10mm;
                 /* Margin lebih besar di kanan untuk posisi konten di kiri */
-            }
-
-            /* Mengatur lebar penuh saat dicetak dalam mode landscape */
-            .container {
-                width: 100%;
-                max-width: none;
-                padding: 20px;
-                margin-left: 0;
-                /* Mengatur posisi konten di paling kiri */
             }
         }
 
         .container {
-            width: 50%;
-            max-width: 600px;
             margin: 0 auto;
             border: 1px solid black;
             padding: 20px;
