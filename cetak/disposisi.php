@@ -6,11 +6,9 @@
     <title>Form Memo</title>
 
     <style>
-        /* Mengatur orientasi kertas A4 landscape untuk cetak */
         @media print {
             @page {
                 size: A4 portrait;
-                /* Margin lebih besar di kanan untuk posisi konten di kiri */
             }
         }
 

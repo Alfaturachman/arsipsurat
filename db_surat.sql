@@ -28,13 +28,13 @@ CREATE TABLE `tb_admin` (
   `gambar` varchar(255) NOT NULL,
   PRIMARY KEY (`id_admin`),
   UNIQUE KEY `username_admin` (`username_admin`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_admin` */
 
 insert  into `tb_admin`(`id_admin`,`nama_admin`,`username_admin`,`password`,`gambar`) values 
-(1,'admin','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin.png'),
-(2,'admin2','admin2','315f166c5aca63a157f7d41007675cb44a948b33','admin2.jpg');
+(2,'admin2','admin2','315f166c5aca63a157f7d41007675cb44a948b33','admin2.jpg'),
+(27,'admin','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin.png');
 
 /*Table structure for table `tb_bagian` */
 
@@ -110,16 +110,13 @@ CREATE TABLE `tb_surat` (
   KEY `id_bagian_penerima` (`id_bagian_penerima`),
   CONSTRAINT `tb_surat_ibfk_1` FOREIGN KEY (`id_bagian_pengirim`) REFERENCES `tb_bagian` (`id_bagian`) ON DELETE SET NULL,
   CONSTRAINT `tb_surat_ibfk_2` FOREIGN KEY (`id_bagian_penerima`) REFERENCES `tb_bagian` (`id_bagian`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_surat` */
 
 insert  into `tb_surat`(`id`,`kode_surat`,`nomor_surat`,`nomor_urut`,`tanggal`,`tanggal_surat`,`penerima`,`pengirim`,`perihal`,`kategori`,`file_surat`,`id_bagian_pengirim`,`id_bagian_penerima`,`created_at`,`updated_at`,`disposisi_1`,`tanggal_disposisi_1`,`disposisi_2`,`tanggal_disposisi_2`,`disposisi_3`,`tanggal_disposisi_3`) values 
-(3,'4534','3424','1445','2025-01-03 00:00:00','2025-01-01','Ka. Bid PPT','Ka. Bid SBP','Perihal Surat Penting','Surat Keluar','2025-SRT-001.pdf',27,32,'2025-01-01 15:40:27','2025-01-01 20:24:20','Disposisi: Segera diproses','2025-01-02 00:00:00','Disposisi: Untuk perhatian bagian keuangan','2025-01-03 00:00:00','Disposisi: Tindak lanjut oleh bagian hukum','2025-01-04 00:00:00'),
-(5,'4534','3424','1447','2025-01-01 18:15:00','2025-01-01','Ka. Bid SBP','Ka. Bid SBP','dsfadfs','Surat Masuk','2025-3424.pdf',28,32,'2025-01-01 18:15:56','2025-01-01 20:22:30','Kasubag Umpeg','2025-01-01 00:00:00','Subkoor HSI','2025-01-01 00:00:00','Ka. Balai PSDA','2025-01-01 00:00:00'),
-(6,'4534','3424','1448','2025-01-01 18:44:00','2025-01-01','Ka. Bid SBP','Ka. Bid SBP','dfdsag','Surat Masuk','2025-3424.pdf',28,32,'2025-01-01 18:46:24','2025-01-01 20:20:59','',NULL,'',NULL,'',NULL),
-(7,'4534','3424','1449','2025-01-01 18:51:00','2025-01-01','Ka. Balai PSDA','Ka. Bid SBP','dsfasdf','Surat Masuk','2025-3424.pdf',28,32,'2025-01-01 18:51:39','2025-01-01 20:57:20','',NULL,'',NULL,'',NULL),
-(8,'4534','3424','1450','2025-01-01 20:28:00','2025-01-01','Ka. Balai PSDA','Ka. Bid PPT','asassasassasas','Surat Keluar','2025-3424.pdf',28,32,'2025-01-01 20:29:02','2025-01-01 20:29:02','',NULL,'',NULL,'',NULL);
+(12,'4534','3424','1231','2025-05-01 20:33:00','2025-05-01','Ka. Bid PPT','admin','sdafdsafasdfds','Surat Masuk','2025-3424.pdf',27,28,'2025-01-05 20:34:09','2025-01-05 20:36:12','',NULL,'',NULL,'',NULL),
+(13,'4534','3424','1232','2025-05-01 20:38:00','2025-05-01','Ka. Balai PSDA','Ka. Bid PPT','sfdaasfdasdf','Surat Masuk','2025-3424.pdf',28,32,'2025-01-05 20:38:21','2025-01-05 20:38:21','',NULL,'',NULL,'',NULL);
 
 /*Table structure for table `tb_suratkeluar` */
 
