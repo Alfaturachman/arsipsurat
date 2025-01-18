@@ -120,7 +120,7 @@ include "koneksi/ceksession.php";
         <div class="wrapper">
           <div class="container">
             <div class="carousel">
-              <div class="carousel-item active">
+              <div class="carousel-item active" style="background-image: url('../img/banner.jpg');">
                 <div class="row">
                   <div class="banner-info text-center wow fadeIn delay-05s">
                     <h2 class="bnr-sub-title"></h2>
@@ -133,7 +133,7 @@ include "koneksi/ceksession.php";
                   </div>
                 </div>
               </div>
-              <div class="carousel-item">
+              <div class="carousel-item" style="background-image: url('../img/balaikota.jpg');">
                 <div class="row">
                   <div class="banner-info text-center wow fadeIn delay-05s">
                     <h2 class="bnr-sub-title"></h2>
@@ -146,7 +146,7 @@ include "koneksi/ceksession.php";
                   </div>
                 </div>
               </div>
-              <div class="carousel-item">
+              <div class="carousel-item" style="background-image: url('../img/balaikota.jpg');">
                 <div class="row">
                   <div class="banner-info text-center wow fadeIn delay-05s">
                     <h2 class="bnr-sub-title"></h2>

@@ -188,7 +188,7 @@ include "login/ceksession.php";
                               </a>
                             </td>
                             <td style="text-align:center;">
-                              <a href="../admin/surat_masuk/<?= $data['file_surat'] ?>" download>
+                              <a href="../admin/surat_keluar/<?= $data['file_surat'] ?>" download>
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">
                                   <i class="fa fa-download"></i>
                                 </button>

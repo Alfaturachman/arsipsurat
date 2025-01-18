@@ -44,8 +44,8 @@ if (
 	$ext_file = substr($nama_file_lengkap, strripos($nama_file_lengkap, '.'));
 	$tmp_file = $_FILES['file_surat']['tmp_name'];
 
-	$thnNow = date("Y");
-	$nama_baru = $thnNow . '-' . $nomor_surat . $ext_file;
+	$tanggal_file = date("Y-m-d_H-i-s");
+	$nama_baru = $tanggal_file . '-' . $nomor_surat . $ext_file;	
 	$path = "../../admin/surat_masuk/" . $nama_baru;
 
 	// Ensure the directory exists
