@@ -11,7 +11,7 @@ include "login/ceksession.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Arsip Surat Kota Samarinda </title>
+    <title>Arsip Surat Kota Semarang </title>
 
      <!-- Bootstrap -->
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -111,7 +111,7 @@ include "login/ceksession.php";
                           <td><?php echo $data['nama_bagian']?></td>
                         </tr>
                         <tr>
-                          <td>Username Admin Bagian</td>
+                          <td>Username Bagian</td>
                           <td><?php echo $data['username_admin_bagian']?></td>
                         </tr>
                         <tr>

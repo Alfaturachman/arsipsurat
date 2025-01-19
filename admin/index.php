@@ -12,7 +12,7 @@ include "login/ceksession.php";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Arsip Surat Kota Samarinda </title>
+  <title>Arsip Surat Kota Semarang </title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -74,7 +74,7 @@ include "login/ceksession.php";
                   $nama = $_SESSION['nama'];
 
                   // Query untuk Surat Masuk dan Surat Keluar
-                  $sql1 = "SELECT * FROM tb_surat WHERE kategori = 'Surat Masuk'";
+                  $sql1 = "SELECT * FROM tb_surat";
                   $query = mysqli_query($db, $sql1);
                   $jumlah = mysqli_num_rows($query);
                   ?>

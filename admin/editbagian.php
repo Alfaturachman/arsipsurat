@@ -11,7 +11,7 @@ include "login/ceksession.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  
-    <title>Arsip Surat Kota Samarinda </title>
+    <title>Arsip Surat Kota Semarang </title>
 
     <!-- Bootstrap -->
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -91,7 +91,7 @@ include "login/ceksession.php";
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Username Admin Bagian <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Username Bagian <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input value="<?php echo $data['username_admin_bagian'];?>" type="text" id="username_admin_bagian" name="username_admin_bagian" required="required" maxlength="50" placeholder="Masukkan Username Admin Bagian" class="form-control col-md-7 col-xs-12">

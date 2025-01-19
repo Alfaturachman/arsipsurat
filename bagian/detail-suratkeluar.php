@@ -12,7 +12,7 @@ include "login/ceksession.php";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Arsip Surat Kota Samarinda </title>
+  <title>Arsip Surat Kota Semarang </title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -78,10 +78,32 @@ include "login/ceksession.php";
                 </div>
                 <?php
                 include '../koneksi/koneksi.php';
+
+                // Ambil data berdasarkan ID dari URL
                 $id = mysqli_real_escape_string($db, $_GET['id']);
                 $sql = "SELECT * FROM tb_surat WHERE id = '$id'";
                 $query = mysqli_query($db, $sql);
+
+                if (!$query || mysqli_num_rows($query) == 0) {
+                  echo "Data tidak ditemukan.";
+                  exit;
+                }
+
                 $data = mysqli_fetch_array($query);
+
+                // Proses update status jika ada permintaan POST
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['status'])) {
+                  $id = intval($_POST['id']);
+                  $status = mysqli_real_escape_string($db, $_POST['status']);
+
+                  $updateQuery = "UPDATE tb_surat SET status = '$status' WHERE id = $id";
+                  if (mysqli_query($db, $updateQuery)) {
+                    echo "Status berhasil diperbarui.";
+                  } else {
+                    echo "Gagal memperbarui status: " . mysqli_error($db);
+                  }
+                  exit;
+                }
                 ?>
                 <div class="x_content">
                   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -160,6 +182,16 @@ include "login/ceksession.php";
                           <td>Tanggal Entry</td>
                           <td><?php echo $data['created_at']; ?></td>
                         </tr>
+                        <tr>
+                          <td>Status</td>
+                          <td>
+                            <select name="status" onchange="updateStatus(<?php echo $id; ?>, this.value)">
+                              <option value="Diproses" <?php echo ($data['status'] == 'Diproses') ? 'selected' : ''; ?>>Diproses</option>
+                              <option value="Disetujui" <?php echo ($data['status'] == 'Disetujui') ? 'selected' : ''; ?>>Disetujui</option>
+                              <option value="Ditolak" <?php echo ($data['status'] == 'Ditolak') ? 'selected' : ''; ?>>Ditolak</option>
+                            </select>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                     <div class="text-right">
@@ -205,7 +237,25 @@ include "login/ceksession.php";
 
   <!-- Custom Theme Scripts -->
   <script src="../assets/build/js/custom.min.js"></script>
+  <script>
+    function updateStatus(id, status) {
+      // Membuat permintaan AJAX
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+      // Kirim data ID dan status ke server
+      xhr.send("id=" + id + "&status=" + status);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          alert("Berhasil ganti status");
+        } else {
+          alert("Gagal memperbarui status.");
+        }
+      };
+    }
+  </script>
 </body>
 
 </html>

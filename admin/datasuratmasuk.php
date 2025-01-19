@@ -12,7 +12,7 @@ include "login/ceksession.php";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Arsip Surat Kota Samarinda</title>
+  <title>Arsip Surat Kota Semarang</title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +112,7 @@ include "login/ceksession.php";
                   $id_bagian = isset($_SESSION['id_bagian']) ? $_SESSION['id_bagian'] : '';
 
                   // Query SQL dasar
-                  $sql1 = "SELECT * FROM tb_surat WHERE kategori = 'Surat Masuk'";
+                  $sql1 = "SELECT * FROM tb_surat";
 
                   // Tambahkan kondisi untuk bulan, tahun, dan id_bagian jika ada
                   $conditions = [];
@@ -126,8 +126,13 @@ include "login/ceksession.php";
                     $conditions[] = "id_bagian_pengirim = '$id_bagian'";
                   }
 
-                  // Tambahkan pengurutan
-                  $sql1 .= " ORDER BY id ASC";
+                  // Gabungkan kondisi jika ada
+                  if (count($conditions) > 0) {
+                    $sql1 .= " AND " . implode(" AND ", $conditions);
+                  }
+
+                  // Tambahkan pengurutan secara menurun (DESC)
+                  $sql1 .= " ORDER BY id DESC";
 
                   // Jalankan query
                   $query1 = mysqli_query($db, $sql1);
@@ -153,8 +158,9 @@ include "login/ceksession.php";
                           <th>Tanggal Surat</th>
                           <th>Nomor Surat</th>
                           <th>Perihal</th>
+                          <th>Penerima</th>
                           <th>Pengirim</th>
-                          <th>Kepada</th>
+                          <th>Status</th>
                           <th>Disposisi 1</th>
                           <th>Disposisi 2</th>
                           <th>Aksi</th>
@@ -171,8 +177,9 @@ include "login/ceksession.php";
                             <td><?= $data['tanggal_surat']; ?></td>
                             <td><?= $data['nomor_surat']; ?></td>
                             <td><?= $data['perihal']; ?></td>
-                            <td><?= $data['pengirim']; ?></td>
                             <td><?= $data['penerima']; ?></td>
+                            <td><?= $data['pengirim']; ?></td>
+                            <td><?= $data['status']; ?></td>
                             <td style="text-align:center;">
                               <a href="../cetak/disposisi.php?id=<?= $data['id'] ?>">
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">

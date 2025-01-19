@@ -50,8 +50,8 @@ $data     = mysqli_fetch_array($query);
           </li> -->
           <li><a><i class="fa fa-file-text"></i> Laporan <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="laporanmasuk.php"><i class="fa  fa-inbox"></i>Laporan Surat Masuk</a></li>
-              <li><a href="laporankeluar.php"><i class="fa fa-send"></i>Laporan Surat Keluar</a></li>
+              <li><a href="laporanmasuk.php"><i class="fa  fa-inbox"></i>Laporan Surat</a></li>
+              
             </ul>
           </li>
         </ul>

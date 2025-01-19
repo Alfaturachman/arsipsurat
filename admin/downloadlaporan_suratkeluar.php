@@ -47,13 +47,13 @@ $excelku->getProperties()->setCreator("Rifki")
 
 // Mergecell, menyatukan beberapa kolom
 $excelku->getActiveSheet()->mergeCells('A2:H2');
-$excelku->getActiveSheet()->setCellValue('A2', "PEMERINTAH KOTA SAMARINDA");
+$excelku->getActiveSheet()->setCellValue('A2', "PEMERINTAH KOTA SEMARANG");
 $excelku->getActiveSheet()->mergeCells('A3:H3');
-$excelku->getActiveSheet()->setCellValue('A3', "KANTOR BALAI KOTA SAMARINDA");
+$excelku->getActiveSheet()->setCellValue('A3', "KANTOR BALAI KOTA SEMARANG");
 $excelku->getActiveSheet()->mergeCells('A4:H4');
 $excelku->getActiveSheet()->setCellValue('A4', "BAGIAN TATA USAHA");
 $excelku->getActiveSheet()->mergeCells('A5:H5');
-$excelku->getActiveSheet()->setCellValue('A5', "Jl. Kesuma Bangsa No. 1, Kota Samarinda, Kalimantan Timur ");
+$excelku->getActiveSheet()->setCellValue('A5', "Jl. Kesuma Bangsa No. 1, Kota Semarang, Kalimantan Timur ");
 $excelku->getActiveSheet()->mergeCells('A6:H6');
 $excelku->getActiveSheet()->setCellValue('A6', "DATA SURAT KELUAR BULAN $bulan TAHUN $tahun");
 $excelku->getActiveSheet()->getStyle('A2:H6')->getFont()->setName('Arial');

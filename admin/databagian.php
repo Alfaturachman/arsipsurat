@@ -11,7 +11,7 @@ include "login/ceksession.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Arsip Surat Kota Samarinda </title>
+    <title>Arsip Surat Kota Semarang </title>
 
     <!-- Bootstrap -->
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -81,7 +81,7 @@ include "login/ceksession.php";
                       <thead>
                         <tr>
                           <th width="15%">Nama Bagian</th>
-                          <th width="10%">Username Admin</th>
+                          <th width="10%">Username </th>
                           <th width="15%">Nama</th>
                           <th width="10%">Tanggal Lahir</th>
                           <th width="20%">Alamat</th>

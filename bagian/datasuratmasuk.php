@@ -12,7 +12,7 @@ include "login/ceksession.php";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Arsip Surat Kota Samarinda</title>
+  <title>Arsip Surat Kota Semarang</title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -140,8 +140,8 @@ include "login/ceksession.php";
                   // Gabungkan kondisi "Surat Masuk" dan "Surat Keluar" dengan OR
                   $sql1 .= " ($conditionsMasuk) OR ($conditionsKeluar)";
 
-                  // Tambahkan pengurutan
-                  $sql1 .= " ORDER BY id ASC";
+                  // Tambahkan pengurutan berdasarkan ID atau tanggal secara menurun
+                  $sql1 .= " ORDER BY id DESC";  // Ganti 'id' dengan 'tanggal_surat' jika kamu ingin berdasarkan tanggal
 
                   // Debug: Output query untuk memeriksa kesalahan
                   // echo $sql1; exit;
@@ -159,7 +159,7 @@ include "login/ceksession.php";
 
                   // Jika tidak ada data, tampilkan pesan
                   if ($total == 0) {
-                    echo "<center><h2>Belum Ada Data Surat Keluar</h2></center>";
+                    echo "<center><h2>Belum Ada Data Surat Masuk</h2></center>";
                   } else { ?>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
@@ -172,8 +172,7 @@ include "login/ceksession.php";
                           <th>Perihal</th>
                           <th>Pengirim</th>
                           <th>Kepada</th>
-                          <th>Disposisi 1</th>
-                          <th>Disposisi 2</th>
+                          <th>Status</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
@@ -190,20 +189,7 @@ include "login/ceksession.php";
                             <td><?= $data['perihal']; ?></td>
                             <td><?= $data['pengirim']; ?></td>
                             <td><?= $data['penerima']; ?></td>
-                            <td style="text-align:center;">
-                              <a href="../cetak/disposisi.php?id=<?= $data['id'] ?>">
-                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                                  <i class="fa fa-file-text-o"></i>
-                                </button>
-                              </a>
-                            </td>
-                            <td style="text-align:center;">
-                              <a href="../cetak/cetak.php?id=<?= $data['id'] ?>">
-                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                                  <i class="fa fa-file-text-o"></i>
-                                </button>
-                              </a>
-                            </td>
+                            <td><?= $data['status']; ?></td>
                             <td style="text-align:center;">
                               <a href="../admin/surat_masuk/<?= $data['file_surat'] ?>" download>
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">

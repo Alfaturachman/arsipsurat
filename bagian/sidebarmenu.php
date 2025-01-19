@@ -36,17 +36,7 @@
                       <li><a href="datasuratkeluar.php"><i class="fa fa-send"></i>Surat Keluar</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-search"></i> Cek Nomor <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="ceknomor.php"><i class="fa fa-laptop"></i>Nomor Surat Keluar</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-file-text"></i> Laporan  <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="laporanmasuk.php"><i class="fa  fa-inbox"></i>Laporan Surat Masuk</a></li>
-                      <li><a href="laporankeluar.php"><i class="fa fa-send"></i>Laporan Surat Keluar</a></li>
-                    </ul>
-                  </li>		
+                  
                 </ul>
               </div>
             </div>

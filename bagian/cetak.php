@@ -113,7 +113,7 @@ $data     = mysqli_fetch_array($query);
 
     <table>
         <tr>
-            <td colspan="2" style="text-align: center; font-size: 16px; font-weight: bold;">LEMBAR DISPOSISI KEPALA DINAS</td>
+            <td colspan="2" style="text-align: center; font-size: 16px; font-weight: bold;">LEMBAR DISPOSISI</td>
             <td style="text-align: center; font-size: 16px; font-weight: bold;">ISI INTRUKSI / INFORMASI</td>
         </tr>
         <tr>

@@ -12,7 +12,7 @@ include "login/ceksession.php";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Arsip Surat Kota Samarinda</title>
+  <title>Arsip Surat Kota Semarang</title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -134,8 +134,8 @@ include "login/ceksession.php";
                     $sql1 .= " AND " . implode(' AND ', $conditions);
                   }
 
-                  // Tambahkan pengurutan
-                  $sql1 .= " ORDER BY id ASC";
+                  // Tambahkan pengurutan agar data terbaru muncul di atas
+                  $sql1 .= " ORDER BY id DESC"; // Menurutkan berdasarkan id secara menurun (data terbaru pertama)
 
                   // Debug: Output query untuk memeriksa kesalahan
                   // echo $sql1; exit;
@@ -166,8 +166,7 @@ include "login/ceksession.php";
                           <th>Perihal</th>
                           <th>Pengirim</th>
                           <th>Kepada</th>
-                          <th>Disposisi 1</th>
-                          <th>Disposisi 2</th>
+                          <th>Status</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
@@ -184,21 +183,8 @@ include "login/ceksession.php";
                             <td><?= $data['perihal']; ?></td>
                             <td><?= $data['pengirim']; ?></td>
                             <td><?= $data['penerima']; ?></td>
-                            <td style="text-align:center;">
-                              <a href="../cetak/disposisi.php?id=<?= $data['id'] ?>">
-                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                                  <i class="fa fa-file-text-o"></i>
-                                </button>
-                              </a>
-                            </td>
-                            <td style="text-align:center;">
-                              <a href="../cetak/cetak.php?id=<?= $data['id'] ?>">
-                                <button type="button" title="Unduh File" class="btn btn-success btn-xs">
-                                  <i class="fa fa-file-text-o"></i>
-                                </button>
-                              </a>
-                            </td>
-                            <td style="text-align:center;">
+                            <td><?= $data['status']; ?></td>
+                             <td style="text-align:center;">
                               <a href="../admin/surat_keluar/<?= $data['file_surat'] ?>" download>
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">
                                   <i class="fa fa-download"></i>

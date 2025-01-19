@@ -188,8 +188,8 @@ $data     = mysqli_fetch_array($query);
 
         <!-- Tanda Tangan -->
         <div class="sign">
-            Agung Prihantono, ST. M.Tech<br>
-            NIP. 19680612 198811 1 002
+            Dr. Ir. AR Hanung Triyono, M.Si<br>
+            NIP. 196611291992031005
         </div>
 
         <!-- Tombol Simpan -->

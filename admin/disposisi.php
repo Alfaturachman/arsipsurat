@@ -137,7 +137,7 @@ $data     = mysqli_fetch_array($query);
 
         <!-- Bidang PPT -->
         <div class="field-group">
-            <label>Bidang PPT:</label>
+            <label>Kepala Dinas:</label>
             <div class="checkbox-group">
                 <td class="checkbox-cell">
 				<input type="checkbox" id="bangguna" name="bidang_ppt[]" value="Bangguna"> </td>
@@ -183,13 +183,13 @@ $data     = mysqli_fetch_array($query);
 
         <!-- Footer Memo -->
         <div class="footer">
-            Kepala Bidang Pengembangan dan Pembinaan Teknis
+            Kepala Dinas
         </div>
 
         <!-- Tanda Tangan -->
         <div class="sign">
-            Agung Prihantono, ST. M.Tech<br>
-            NIP. 19680612 198811 1 002
+            Dr. Ir. AR Hanung Triyono, M.Si<br>
+            NIP. 196611291992031005
         </div>
 
         <!-- Tombol Simpan -->

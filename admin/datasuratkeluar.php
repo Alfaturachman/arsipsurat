@@ -7,12 +7,10 @@ include "login/ceksession.php";
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Arsip Surat Kota Samarinda</title>
+  <title>Arsip Surat Kota Semarang</title>
 
   <!-- Bootstrap -->
   <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,15 +35,11 @@ include "login/ceksession.php";
   <div class="container body">
     <div class="main_container">
       <!-- Profile and Sidebarmenu -->
-      <?php
-      include("sidebarmenu.php");
-      ?>
+      <?php include("sidebarmenu.php"); ?>
       <!-- /Profile and Sidebarmenu -->
 
       <!-- top navigation -->
-      <?php
-      include("header.php");
-      ?>
+      <?php include("header.php"); ?>
       <!-- /top navigation -->
 
       <!-- page content -->
@@ -70,18 +64,16 @@ include "login/ceksession.php";
                   <div class="col-md-2 col-sm-2 col-xs-6">
                     <select name="bulan" class="select2_single form-control" tabindex="-1">
                       <option value="">Pilih Bulan</option>
-                      <option value="01">Januari</option>
-                      <option value="02">Februari</option>
-                      <option value="03">Maret</option>
-                      <option value="04">April</option>
-                      <option value="05">Mei</option>
-                      <option value="06">Juni</option>
-                      <option value="07">Juli</option>
-                      <option value="08">Agustus</option>
-                      <option value="09">September</option>
-                      <option value="10">Oktober</option>
-                      <option value="11">November</option>
-                      <option value="12">Desember</option>
+                      <?php
+                      $months = [
+                        "01" => "Januari", "02" => "Februari", "03" => "Maret", "04" => "April",
+                        "05" => "Mei", "06" => "Juni", "07" => "Juli", "08" => "Agustus",
+                        "09" => "September", "10" => "Oktober", "11" => "November", "12" => "Desember"
+                      ];
+                      foreach ($months as $key => $value) {
+                        echo "<option value='$key'>$value</option>";
+                      }
+                      ?>
                     </select>
                   </div>
                   <div class="col-md-2 col-sm-2 col-xs-6">
@@ -126,8 +118,12 @@ include "login/ceksession.php";
                     $conditions[] = "id_bagian_pengirim = '$id_bagian'";
                   }
 
-                  // Tambahkan pengurutan
-                  $sql1 .= " ORDER BY id ASC";
+                  if (!empty($conditions)) {
+                    $sql1 .= " AND " . implode(" AND ", $conditions);
+                  }
+
+                  // Tambahkan pengurutan agar data terbaru muncul di atas
+                  $sql1 .= " ORDER BY id DESC";
 
                   // Jalankan query
                   $query1 = mysqli_query($db, $sql1);
@@ -155,8 +151,7 @@ include "login/ceksession.php";
                           <th>Perihal</th>
                           <th>Pengirim</th>
                           <th>Kepada</th>
-                          <th>Disposisi 1</th>
-                          <th>Disposisi 2</th>
+                          <th>Status</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
@@ -173,7 +168,8 @@ include "login/ceksession.php";
                             <td><?= $data['perihal']; ?></td>
                             <td><?= $data['pengirim']; ?></td>
                             <td><?= $data['penerima']; ?></td>
-                            <td style="text-align:center;">
+                            <td><?= $data['status']; ?></td>
+                            <!-- <td style="text-align:center;">
                               <a href="../cetak/disposisi.php?id=<?= $data['id'] ?>">
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">
                                   <i class="fa fa-file-text-o"></i>
@@ -186,7 +182,7 @@ include "login/ceksession.php";
                                   <i class="fa fa-file-text-o"></i>
                                 </button>
                               </a>
-                            </td>
+                            </td> -->
                             <td style="text-align:center;">
                               <a href="../admin/surat_keluar/<?= $data['file_surat'] ?>" download>
                                 <button type="button" title="Unduh File" class="btn btn-success btn-xs">

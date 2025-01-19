@@ -1,7 +1,6 @@
 <?php
 session_start();
 include '../../koneksi/koneksi.php';
-date_default_timezone_set('Asia/Jakarta'); 
 
 // Check if the necessary POST keys exist to avoid undefined index warnings
 $kode_surat = isset($_POST['kode_surat']) ? mysqli_real_escape_string($db, $_POST['kode_surat']) : '';
@@ -25,11 +24,11 @@ $disposisi3 = !empty($_POST['disposisi3']) ? mysqli_real_escape_string($db, $_PO
 $tanggal_disposisi3 = !empty($_POST['tanggal_disposisi3']) ? mysqli_real_escape_string($db, $_POST['tanggal_disposisi3']) : NULL;
 
 // Pengecekan dan pemformatan untuk tanggal surat dan disposisi
-$tanggal = date('Y-m-d H:i:s', strtotime($tanggal));
-$tanggal_surat = date('Y-m-d', strtotime($tanggal_surat));
-$tanggal_disposisi1 = !empty($tanggal_disposisi1) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi1)->format('Y-m-d H:i:s') : NULL;
-$tanggal_disposisi2 = !empty($tanggal_disposisi2) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi2)->format('Y-m-d H:i:s') : NULL;
-$tanggal_disposisi3 = !empty($tanggal_disposisi3) ? DateTime::createFromFormat('d/m/Y h:i A', $tanggal_disposisi3)->format('Y-m-d H:i:s') : NULL;
+$tanggal = $_POST['tanggal'] ?? NULL;
+$tanggal_surat = $_POST['tanggal_surat'] ?? NULL;
+$tanggal_disposisi1 = $_POST['tanggal_disposisi1'] ?? NULL;
+$tanggal_disposisi2 = $_POST['tanggal_disposisi2'] ?? NULL;
+$tanggal_disposisi3 = $_POST['tanggal_disposisi3'] ?? NULL;
 
 // Validate the required fields
 if (
@@ -43,8 +42,9 @@ if (
 	$nama_file = substr($nama_file_lengkap, 0, strripos($nama_file_lengkap, '.'));
 	$ext_file = substr($nama_file_lengkap, strripos($nama_file_lengkap, '.'));
 	$tmp_file = $_FILES['file_surat']['tmp_name'];
-	
-	$tanggal_file = date("Y-m-d_H-i-s");
+
+	// Gabungkan menjadi satu string
+	$tanggal_file = date("YmdHis");
 	$nama_baru = $tanggal_file . '-' . $nomor_surat . $ext_file;
 	$path = "../../admin/surat_keluar/" . $nama_baru;
 
