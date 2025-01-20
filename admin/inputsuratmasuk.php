@@ -77,14 +77,14 @@ include "login/ceksession.php";
                   <br />
                   <form action="proses/proses_inputsuratmasuk.php" name="formsuratmasuk" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kategori"> <span class="required"></span></label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kategori">Kategori <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="hidden" id="kategori" name="kategori" value="Surat Masuk" required="required" maxlength="35" placeholder="Masukkan kategori" class="form-control col-md-7 col-xs-12" readonly>
+                        <input type="text" id="kategori" name="kategori" value="Surat Masuk" required="required" maxlength="35" placeholder="Masukkan kategori" class="form-control col-md-7 col-xs-12" readonly>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Keluar <span class="required">*</span></label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Masuk <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class='input-group date' id='myDatepicker4'>
                           <input type='text' id="tanggal" name="tanggal" required="required" class="form-control" required="required" readonly="readonly" />
@@ -135,12 +135,20 @@ include "login/ceksession.php";
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Surat <span class="required">*</span></label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tanggal_surat">Tanggal Surat <span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <fieldset>
                           <div class="control-group">
                             <div class="controls">
-                              <input type="text" class="form-control has-feedback-left" id="single_cal3" name="tanggal_surat" placeholder="Tanggal Surat" aria-describedby="inputSuccess2Status3" required="required" readonly="readonly">
+                              <input
+                                type="text"
+                                class="form-control has-feedback-left"
+                                id="single_cal3"
+                                name="tanggal_surat"
+                                placeholder="Tanggal Surat"
+                                aria-describedby="inputSuccess2Status3"
+                                required="required"
+                                readonly="readonly">
                               <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             </div>
                           </div>
@@ -233,7 +241,7 @@ include "login/ceksession.php";
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 1 </label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='myDatepicker'>
+                        <div class='input-group date' id='myDatepicker1'>
                           <input type='text' id="tanggal_disposisi1" name="tanggal_disposisi1" class="form-control" />
                           <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -262,7 +270,7 @@ include "login/ceksession.php";
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 2 </label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='myDatepicker'>
+                        <div class='input-group date' id='myDatepicker2'>
                           <input type='text' id="tanggal_disposisi2" name="tanggal_disposisi2" class="form-control" />
                           <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -291,7 +299,7 @@ include "login/ceksession.php";
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Disposisi 3 </label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class='input-group date' id='myDatepicker'>
+                        <div class='input-group date' id='myDatepicker3'>
                           <input type='text' id="tanggal_disposisi3" name="tanggal_disposisi3" class="form-control" />
                           <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -367,33 +375,44 @@ include "login/ceksession.php";
   <script src="../assets/build/js/custom.min.js"></script>
   <!-- Initialize datetimepicker -->
   <script>
-    $('#myDatepicker').datetimepicker();
+    $(document).ready(function() {
+      // Konfigurasi datetimepicker untuk tanggal dan waktu
+      $('#myDatepicker1').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        allowInputToggle: true,
+        showClear: true,
+        showClose: true
+      });
 
-    $('#myDatepicker2').datetimepicker({
-      format: 'DD.MM.YYYY'
-    });
+      $('#myDatepicker2').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        allowInputToggle: true,
+        showClear: true,
+        showClose: true
+      });
 
-    $('#myDatepicker3').datetimepicker({
-      format: 'hh:mm A'
-    });
+      $('#myDatepicker3').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        allowInputToggle: true,
+        showClear: true,
+        showClose: true
+      });
 
-    $('#myDatepicker4').datetimepicker({
-      ignoreReadonly: true,
-      allowInputToggle: true
-    });
+      $('#myDatepicker4').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        ignoreReadonly: true,
+        allowInputToggle: true,
+        showClear: true,
+        showClose: true
+      });
 
-    $('#datetimepicker6').datetimepicker();
-
-    $('#datetimepicker7').datetimepicker({
-      useCurrent: false
-    });
-
-    $("#datetimepicker6").on("dp.change", function(e) {
-      $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-
-    $("#datetimepicker7").on("dp.change", function(e) {
-      $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+      $('#single_cal3').datetimepicker({
+        format: 'YYYY/MM/DD',
+        ignoreReadonly: true,
+        allowInputToggle: true,
+        showClear: true,
+        showClose: true
+      });
     });
   </script>
   <script language='javascript'>
