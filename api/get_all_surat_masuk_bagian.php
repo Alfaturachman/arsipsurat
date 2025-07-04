@@ -14,7 +14,7 @@ if (!isset($data['id_user'])) {
     exit();
 }
 
-$id_bagian_penerima = $conn->real_escape_string($data['id_user']);
+$id_user = $conn->real_escape_string($data['id_user']);
 
 // Query untuk mengambil semua data surat dengan filter id_bagian_penerima dan kategori = 'Surat Masuk'
 $sql = "SELECT s.*, 
@@ -23,8 +23,8 @@ $sql = "SELECT s.*,
         FROM tb_surat s
         LEFT JOIN tb_bagian bp ON s.id_bagian_penerima = bp.id_bagian
         LEFT JOIN tb_bagian bg ON s.id_bagian_pengirim = bg.id_bagian
-        WHERE s.id_bagian_penerima = '$id_bagian_penerima'
-        AND s.kategori = 'Surat Masuk'
+        WHERE (s.kategori = 'Surat Masuk' AND s.id_bagian_penerima = '$id_user')
+           OR (s.kategori = 'Surat Masuk' AND s.id_bagian_pengirim = '$id_user')
         ORDER BY s.tanggal DESC";
 
 $result = $conn->query($sql);

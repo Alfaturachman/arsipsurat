@@ -21,10 +21,9 @@ $sql = "SELECT s.*,
                bp.nama_bagian AS nama_bagian_penerima,
                bg.nama_bagian AS nama_bagian_pengirim
         FROM tb_surat s
-        LEFT JOIN tb_bagian bp ON s.id_bagian_pengirim = bp.id_bagian
+        LEFT JOIN tb_bagian bp ON s.id_bagian_penerima = bp.id_bagian
         LEFT JOIN tb_bagian bg ON s.id_bagian_pengirim = bg.id_bagian
-        WHERE s.id_bagian_pengirim = '$id_user'
-        AND s.kategori = 'Surat Masuk'
+        WHERE (s.kategori = 'Surat Keluar' AND s.id_bagian_pengirim = '$id_user')
         ORDER BY s.tanggal DESC";
 
 $result = $conn->query($sql);

@@ -17,8 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kode_surat = isset($_POST['kode_surat']) ? $conn->real_escape_string($_POST['kode_surat']) : null;
     $nomor_surat = isset($_POST['nomor_surat']) ? $conn->real_escape_string($_POST['nomor_surat']) : null;
     $nomor_urut = isset($_POST['nomor_urut']) ? $conn->real_escape_string($_POST['nomor_urut']) : null;
-    $tanggal_masuk = isset($_POST['tanggal_masuk']) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_masuk'])) : null;
-    $tanggal_surat = isset($_POST['tanggal_surat']) ? date("Y-m-d", strtotime($_POST['tanggal_surat'])) : null;
     $penerima = isset($_POST['kepada']) ? $conn->real_escape_string($_POST['kepada']) : null;
     $pengirim = isset($_POST['pengirim']) ? $conn->real_escape_string($_POST['pengirim']) : null;
     $perihal = isset($_POST['perihal']) ? $conn->real_escape_string($_POST['perihal']) : null;
@@ -27,12 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $disposisi1 = isset($_POST['disposisi1']) ? $conn->real_escape_string($_POST['disposisi1']) : null;
     $disposisi2 = isset($_POST['disposisi2']) ? $conn->real_escape_string($_POST['disposisi2']) : null;
     $disposisi3 = isset($_POST['disposisi3']) ? $conn->real_escape_string($_POST['disposisi3']) : null;
-    $tanggal_disposisi1 = isset($_POST['tanggal_disposisi1']) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi1'])) : null;
-    $tanggal_disposisi2 = isset($_POST['tanggal_disposisi2']) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi2'])) : null;
-    $tanggal_disposisi3 = isset($_POST['tanggal_disposisi3']) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi3'])) : null;
+
+    $tanggal_masuk = (!empty($_POST['tanggal_masuk'])) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_masuk'])) : null;
+    $tanggal_surat = (!empty($_POST['tanggal_surat'])) ? date("Y-m-d", strtotime($_POST['tanggal_surat'])) : null;
+    $tanggal_disposisi1 = (!empty($_POST['tanggal_disposisi1'])) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi1'])) : null;
+    $tanggal_disposisi2 = (!empty($_POST['tanggal_disposisi2'])) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi2'])) : null;
+    $tanggal_disposisi3 = (!empty($_POST['tanggal_disposisi3'])) ? date("Y-m-d H:i:s", strtotime($_POST['tanggal_disposisi3'])) : null;
 
     // Simpan file ke server
-    $upload_dir = "../admin/surat_keluar/";
+    $upload_dir = "../admin/surat_masuk/";
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
@@ -63,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             " . ($penerima !== null ? "'$penerima'" : "NULL") . ", 
             " . ($pengirim !== null ? "'$pengirim'" : "NULL") . ", 
             " . ($perihal !== null ? "'$perihal'" : "NULL") . ", 
-            'Surat Keluar', 
+            'Surat Masuk', 
             '$file_surat', 
             " . ($id_bagian_pengirim !== null ? "$id_bagian_pengirim" : "NULL") . ", 
             " . ($id_bagian_penerima !== null ? "$id_bagian_penerima" : "NULL") . ", 
